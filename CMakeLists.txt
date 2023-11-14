@@ -6,9 +6,10 @@ project(DynValues)
 
 file(GLOB SOURCES "src/*/sources/*.cpp")
 
-add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})
+set(LIB_NAME ${PROJECT_NAME}_lib)
+add_library(${LIB_NAME} STATIC ${SOURCES})
 target_include_directories(
-	${PROJECT_NAME}_lib
+	${LIB_NAME}
 
 	PUBLIC src/values/headers
 	PUBLIC src/auxillary_classes/headers
@@ -16,4 +17,4 @@ target_include_directories(
 )
 
 add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${LIB_NAME})
