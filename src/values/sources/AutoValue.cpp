@@ -54,3 +54,7 @@ AutoValue::operator int() const { return *_value; }
 AutoValue::operator unsigned long() const { return *_value; }
 
 bool AutoValue::isNull() const { return _value->isNull(); }
+bool AutoValue::isInt() const { return _value->isInt(); }
+bool AutoValue::isUnsignedLongInt() const { return _value->isUnsignedLongInt(); }
+bool AutoValue::isDouble() const { return _value->isDouble(); }
+bool AutoValue::isString() const { return _value->isString(); }

@@ -23,6 +23,12 @@ public:
 	operator double() const;
 	operator int() const;
 	operator unsigned long() const;
+
+	bool isNull() const { return false; }
+	bool isInt() const { return true; }
+	bool isUnsignedLongInt() const { return false; }
+	bool isDouble() const { return false; }
+	bool isString() const { return false; }
 };
 
 #endif

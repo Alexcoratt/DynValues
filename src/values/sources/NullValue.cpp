@@ -14,5 +14,3 @@ NullValue::operator std::string() const { return ""; }
 NullValue::operator double() const { return 0; }
 NullValue::operator int() const { return 0; }
 NullValue::operator unsigned long() const { return 0; }
-
-bool NullValue::isNull() const { return true; }

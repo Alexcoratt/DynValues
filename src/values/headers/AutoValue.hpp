@@ -37,6 +37,10 @@ public:
 	operator unsigned long() const;
 
 	bool isNull() const;
+	bool isInt() const;
+	bool isUnsignedLongInt() const;
+	bool isDouble() const;
+	bool isString() const;
 };
 
 #endif

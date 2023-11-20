@@ -24,7 +24,11 @@ public:
 	virtual operator int() const = 0;
 	virtual operator unsigned long() const = 0;
 
-	virtual bool isNull() const { return false; }
+	virtual bool isNull() const = 0;
+	virtual bool isInt() const = 0;
+	virtual bool isUnsignedLongInt() const = 0;
+	virtual bool isDouble() const = 0;
+	virtual bool isString() const = 0;
 };
 
 inline std::ostream & operator<<(std::ostream & stream, IValue const & value) {

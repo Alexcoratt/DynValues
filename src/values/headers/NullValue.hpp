@@ -16,7 +16,11 @@ public:
 	operator int() const;
 	operator unsigned long() const;
 
-	bool isNull() const;
+	bool isNull() const { return true; }
+	bool isInt() const { return false; }
+	bool isUnsignedLongInt() const { return false; }
+	bool isDouble() const { return false; }
+	bool isString() const { return false; }
 };
 
 #endif
