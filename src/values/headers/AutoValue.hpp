@@ -1,12 +1,13 @@
 #ifndef AUTO_VALUE_HPP
 #define AUTO_VALUE_HPP
 
+#include <memory>
+
 #include "IValue.hpp"
-#include "SmartPointer.hpp"
 
 class AutoValue : public IValue {
 private:
-	SmartPointer<IValue> _value;
+	std::shared_ptr<IValue> _value;
 
 public:
 	AutoValue();

@@ -35,13 +35,13 @@ AutoValue & AutoValue::operator=(IValue const & other) {
 AutoValue::~AutoValue() {}
 
 int AutoValue::nestCount() const {
-	AutoValue const * value = dynamic_cast<AutoValue const *>(_value.getPointer());
+	AutoValue const * value = dynamic_cast<AutoValue const *>(_value.get());
 	if (value)
 		return 1 + value->nestCount();
 	return 0;
 }
 
-void AutoValue::clear() { _value = new NullValue(); }
+void AutoValue::clear() { _value.reset(new NullValue()); }
 
 void AutoValue::swap(AutoValue & other) { std::swap(_value, other._value); }
 

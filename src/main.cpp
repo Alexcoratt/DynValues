@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include <IValue.hpp>
 #include <AutoValue.hpp>
-#include <StringValue.hpp>
-#include <SmartPointer.hpp>
-#include <NullValue.hpp>
 
 int main() {
 	AutoValue a = 3;
@@ -22,12 +20,15 @@ int main() {
 	c = -21.32;
 	std::cout << c << ' ';
 
-	SmartPointer<AutoValue> aClone = a.getClone();
+	auto aClone = a.getClone();
 
 	std::cout << std::endl << a.nestCount() << ' ' << *aClone << std::endl;
 
-	AutoValue n;
-	std::cout << (n = NullValue()).isNull() << std::endl;
+	IValue * n = aClone;
+	aClone->clear();
+	std::cout << n->isNull() << std::endl;
+
+	delete n;
 
 	return 0;
 }

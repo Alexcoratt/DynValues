@@ -12,7 +12,6 @@ target_include_directories(
 	${LIB_NAME}
 
 	PUBLIC src/values/headers
-	PUBLIC src/auxillary_classes/headers
 	PUBLIC src/exceptions
 )
 
