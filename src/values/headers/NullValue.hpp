@@ -5,22 +5,18 @@
 
 class NullValue : public IValue {
 public:
-	NullValue * getClone() const;
+	NullValue * getClone() const override;
 
-	NullValue & operator=(IValue const &);
+	NullValue & operator=(NullValue const &);
 
-	bool operator<(IValue const &) const;
+	bool operator<(IValue const &) const override;
 
-	operator std::string() const;
-	operator double() const;
-	operator int() const;
-	operator unsigned long() const;
+	operator std::string() const override;
+	operator double() const override;
+	operator int() const override;
+	operator unsigned long() const override;
 
-	bool isNull() const { return true; }
-	bool isInt() const { return false; }
-	bool isUnsignedLongInt() const { return false; }
-	bool isDouble() const { return false; }
-	bool isString() const { return false; }
+	bool isNull() const override { return true; }
 };
 
 #endif

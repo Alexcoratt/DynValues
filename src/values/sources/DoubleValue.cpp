@@ -3,9 +3,9 @@
 #include "DoubleValue.hpp"
 
 DoubleValue::DoubleValue(double value) : _value(value) {}
-DoubleValue::DoubleValue(IValue const & other) : _value(other) {}
+DoubleValue::DoubleValue(DoubleValue const & other) : _value(other) {}
 
-DoubleValue & DoubleValue::operator=(IValue const & other) {
+DoubleValue & DoubleValue::operator=(DoubleValue const & other) {
 	if (this != &other) {
 		DoubleValue tmp(other);
 		swap(tmp);

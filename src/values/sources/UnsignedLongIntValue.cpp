@@ -3,7 +3,7 @@
 UnsignedLongIntValue::UnsignedLongIntValue(unsigned long value) : _value(value) {}
 UnsignedLongIntValue::UnsignedLongIntValue(UnsignedLongIntValue const & other) : _value(other._value) {}
 
-UnsignedLongIntValue & UnsignedLongIntValue::operator=(IValue const & other) {
+UnsignedLongIntValue & UnsignedLongIntValue::operator=(UnsignedLongIntValue const & other) {
 	_value = other;
 	return *this;
 }

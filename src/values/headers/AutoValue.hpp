@@ -24,24 +24,23 @@ public:
 	void clear();
 
 	AutoValue & operator=(AutoValue const &);
-	AutoValue & operator=(IValue const &);
 
 	void swap(AutoValue &);
 
-	AutoValue * getClone() const;
+	AutoValue * getClone() const override;
 
-	bool operator<(IValue const &) const;
+	bool operator<(IValue const &) const override;
 
-	operator std::string() const;
-	operator double() const;
-	operator int() const;
-	operator unsigned long() const;
+	operator std::string() const override;
+	operator double() const override;
+	operator int() const override;
+	operator unsigned long() const override;
 
-	bool isNull() const;
-	bool isInt() const;
-	bool isUnsignedLongInt() const;
-	bool isDouble() const;
-	bool isString() const;
+	bool isNull() const override;
+	bool isInt() const override;
+	bool isUnsignedLongInt() const override;
+	bool isDouble() const override;
+	bool isString() const override;
 };
 
 #endif

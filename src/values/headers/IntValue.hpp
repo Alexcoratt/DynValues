@@ -9,26 +9,22 @@ private:
 
 public:
 	IntValue(int);
-	IntValue(IValue const &);
-	IntValue & operator=(IValue const &);
+	IntValue(IntValue const &);
+	IntValue & operator=(IntValue const &);
 	~IntValue();
 
 	void swap(IntValue &);
 
-	IntValue * getClone() const;
+	IntValue * getClone() const override;
 
-	bool operator<(IValue const &) const;
+	bool operator<(IValue const &) const override;
 
-	operator std::string() const;
-	operator double() const;
-	operator int() const;
-	operator unsigned long() const;
+	operator std::string() const override;
+	operator double() const override;
+	operator int() const override;
+	operator unsigned long() const override;
 
-	bool isNull() const { return false; }
-	bool isInt() const { return true; }
-	bool isUnsignedLongInt() const { return false; }
-	bool isDouble() const { return false; }
-	bool isString() const { return false; }
+	bool isInt() const override { return true; }
 };
 
 #endif

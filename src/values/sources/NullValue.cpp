@@ -2,7 +2,7 @@
 
 NullValue * NullValue::getClone() const { return new NullValue; }
 
-NullValue & NullValue::operator=(IValue const &) { return *this; }
+NullValue & NullValue::operator=(NullValue const &) { return *this; }
 
 bool NullValue::operator<(IValue const & other) const {
 	if (other.isNull())

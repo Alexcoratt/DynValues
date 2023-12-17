@@ -1,12 +1,12 @@
 #include <algorithm>
-#include <stdexcept>
 
 #include "StringValue.hpp"
+#include "UnableToTransformException.hpp"
 
 StringValue::StringValue(std::string const & value) : _value(value) {}
 StringValue::StringValue(char const * value) : _value(value) {}
-StringValue::StringValue(IValue const & other) : _value(other) {}
-StringValue & StringValue::operator=(IValue const & other) {
+StringValue::StringValue(StringValue const & other) : _value(other) {}
+StringValue & StringValue::operator=(StringValue const & other) {
 	if (this != &other) {
 		StringValue tmp(other);
 		swap(tmp);
@@ -24,13 +24,13 @@ bool StringValue::operator<(IValue const & other) const { return _value < std::s
 StringValue::operator std::string() const { return _value; }
 
 StringValue::operator double() const {
-	throw std::invalid_argument("operator double(): string value cannot be represented as value of type double");
+	throw UnableToTransformException("StringValue", "DoubleValue", _value);
 }
 
 StringValue::operator int() const {
-	throw std::invalid_argument("operator int(): string value cannot be represented as value of type int");
+	throw UnableToTransformException("StringValue", "IntValue", _value);
 }
 
 StringValue::operator unsigned long() const {
-	throw std::invalid_argument("operator unsigned long(): string value cannot be represented as value of type unsigned long");
+	throw UnableToTransformException("StringValue", "UnsignedLongValue", _value);
 }

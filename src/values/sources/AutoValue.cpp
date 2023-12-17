@@ -24,14 +24,6 @@ AutoValue & AutoValue::operator=(AutoValue const & other) {
 	return *this;
 }
 
-AutoValue & AutoValue::operator=(IValue const & other) {
-	if (this != &other) {
-		AutoValue tmp(other);
-		swap(tmp);
-	}
-	return *this;
-}
-
 AutoValue::~AutoValue() {}
 
 int AutoValue::nestCount() const {

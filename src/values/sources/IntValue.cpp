@@ -3,9 +3,9 @@
 #include "IntValue.hpp"
 
 IntValue::IntValue(int value) : _value(value) {}
-IntValue::IntValue(IValue const & other) : _value(other) {}
+IntValue::IntValue(IntValue const & other) : _value(other) {}
 
-IntValue & IntValue::operator=(IValue const & other) {
+IntValue & IntValue::operator=(IntValue const & other) {
 	if (this != &other) {
 		IntValue tmp(other);
 		swap(tmp);
