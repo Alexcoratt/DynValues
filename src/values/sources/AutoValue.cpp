@@ -89,6 +89,10 @@ void AutoValue::push_back(IValue const & value) {
 		((VectorValue *)_value.get())->push_back(&value);
 		return;
 	}
+	if (isNull()) {
+		_value.reset(value.getClone());
+		return;
+	}
 	_value.reset(new VectorValue{{_value.get(), &value}});
 }
 

@@ -32,11 +32,8 @@ int main() {
 
 	delete n;
 
+	b.clear();
 	b.push_back(a);
-	NullValue null;
-	IntValue iv = 4;
-	VectorValue vect{{&null, &iv}};
-	b.push_back(vect);
 	b.push_back(b);
 	std::cout << b << std::endl;
 

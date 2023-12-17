@@ -37,6 +37,7 @@ public:
 	bool empty() const;
 
 	bool isVector() const override { return true; }
+	bool isNull() const override { return empty(); }
 };
 
 #endif
