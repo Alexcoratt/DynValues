@@ -3,6 +3,8 @@
 
 #include <IValue.hpp>
 #include <AutoValue.hpp>
+#include <NullValue.hpp>
+#include <IntValue.hpp>
 
 int main() {
 	AutoValue a = 3;
@@ -31,6 +33,11 @@ int main() {
 	delete n;
 
 	b.push_back(a);
+	NullValue null;
+	IntValue iv = 4;
+	VectorValue vect{{&null, &iv}};
+	b.push_back(vect);
+	b.push_back(b);
 	std::cout << b << std::endl;
 
 	return 0;

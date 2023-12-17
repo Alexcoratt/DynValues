@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 
 #include "VectorValue.hpp"
 #include "UnableToTransformException.hpp"
@@ -36,10 +37,12 @@ void VectorValue::swap(VectorValue & other) {
 
 VectorValue * VectorValue::getClone() const {
 	std::size_t len = _values.size();
-	std::vector<IValue const *> res{len};
+	std::vector<IValue *> values{len};
 	for (std::size_t i = 0; i < len; ++i)
-		res[i] = _values.at(i)->getClone();
-	return new VectorValue{res};
+		values[i] = _values.at(i)->getClone();
+	VectorValue * res = new VectorValue;
+	res->_values = values;
+	return res;
 }
 
 bool VectorValue::operator<(IValue const & other) const {
@@ -78,7 +81,9 @@ IValue const * VectorValue::at(std::size_t const & index) const { return _values
 IValue * VectorValue::back() { return _values.back(); }
 IValue const * VectorValue::back() const { return _values.back(); }
 
-void VectorValue::push_back(IValue const * value) { _values.push_back(value->getClone()); }
+void VectorValue::push_back(IValue const * value) {
+	_values.push_back(value->getClone());
+}
 void VectorValue::pop_back() {
 	IValue * value = _values.back();
 	_values.pop_back();

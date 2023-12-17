@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 #include "AutoValue.hpp"
 #include "DoubleValue.hpp"
@@ -41,7 +42,9 @@ void AutoValue::clear() { _value.reset(new NullValue()); }
 
 void AutoValue::swap(AutoValue & other) { std::swap(_value, other._value); }
 
-AutoValue * AutoValue::getClone() const { return new AutoValue(*_value); }
+AutoValue * AutoValue::getClone() const {
+	return new AutoValue(_value.get());
+}
 bool AutoValue::operator<(IValue const & other) const { return *_value < other; }
 
 // vector methods
@@ -86,8 +89,7 @@ void AutoValue::push_back(IValue const & value) {
 		((VectorValue *)_value.get())->push_back(&value);
 		return;
 	}
-	IValue const * tmp = _value.get();
-	_value.reset(new VectorValue{{tmp, &value}});
+	_value.reset(new VectorValue{{_value.get(), &value}});
 }
 
 void AutoValue::pop_back() {

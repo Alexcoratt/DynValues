@@ -12,7 +12,7 @@ public:
 	VectorValue(std::vector<IValue const *> const & values = {});
 	VectorValue(VectorValue const & other);
 	VectorValue & operator=(VectorValue const & other);
-	~VectorValue();
+	~VectorValue() override;
 
 	void swap(VectorValue & other);
 
