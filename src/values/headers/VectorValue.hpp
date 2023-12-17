@@ -9,7 +9,7 @@ private:
 	std::vector<IValue *> _values;
 
 public:
-	VectorValue(std::vector<IValue const *> const & values);
+	VectorValue(std::vector<IValue const *> const & values = {});
 	VectorValue(VectorValue const & other);
 	VectorValue & operator=(VectorValue const & other);
 	~VectorValue();
@@ -34,6 +34,7 @@ public:
 	void push_back(IValue const * value);
 	void pop_back();
 	std::size_t size() const;
+	bool empty() const;
 
 	bool isVector() const override { return true; }
 };

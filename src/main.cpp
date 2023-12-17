@@ -30,5 +30,8 @@ int main() {
 
 	delete n;
 
+	b.push_back(a);
+	std::cout << b << std::endl;
+
 	return 0;
 }

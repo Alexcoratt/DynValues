@@ -86,3 +86,5 @@ void VectorValue::pop_back() {
 }
 
 std::size_t VectorValue::size() const { return _values.size(); }
+
+bool VectorValue::empty() const { return _values.empty(); }

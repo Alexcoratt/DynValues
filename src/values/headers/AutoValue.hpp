@@ -2,8 +2,10 @@
 #define AUTO_VALUE_HPP
 
 #include <memory>
+#include <vector>
 
 #include "IValue.hpp"
+#include "VectorValue.hpp"
 
 class AutoValue : public IValue {
 private:
@@ -13,11 +15,13 @@ public:
 	AutoValue();
 	AutoValue(AutoValue const &);
 	AutoValue(IValue const &);
+	AutoValue(IValue const *);
 	AutoValue(double);
 	AutoValue(int);
 	AutoValue(unsigned long);
 	AutoValue(std::string const &);
 	AutoValue(char const *);
+	AutoValue(std::vector<IValue const *> const & values);
 	~AutoValue();
 
 	int nestCount() const;
@@ -31,6 +35,19 @@ public:
 
 	bool operator<(IValue const &) const override;
 
+	// vector methods
+	IValue & operator[](std::size_t const & index);
+	IValue & at(std::size_t const & index);
+	IValue const & at(std::size_t const & index) const;
+	IValue & back();
+	IValue const & back() const;
+
+	void push_back(IValue const & value);
+	void pop_back();
+	std::size_t size() const;
+	bool empty() const;
+
+	// type transformation methods
 	operator std::string() const override;
 	operator double() const override;
 	operator int() const override;
@@ -41,6 +58,7 @@ public:
 	bool isUnsignedLongInt() const override;
 	bool isDouble() const override;
 	bool isString() const override;
+	bool isVector() const override;
 };
 
 #endif
