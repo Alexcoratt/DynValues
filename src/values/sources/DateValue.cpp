@@ -137,6 +137,14 @@ void DateValue::setDayNum(unsigned int dayNum) {
 	_value += dayNum - 1 - getDayNum();
 }
 
+void DateValue::set(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum) {
+	setYearNum(yearNum);
+	setMonthNum(monthNum);
+	setDayNum(dayNum);
+}
+
+void DateValue::setDaysFromTheBegin(unsigned long int dayNum) { _value = dayNum; }
+
 // cloning
 DateValue * DateValue::getClone() const { return new DateValue{_value}; }
 
@@ -145,8 +153,13 @@ bool DateValue::operator<(IValue const & other) const { return _value < other.to
 
 // transformation
 std::string DateValue::toString() const {
+	unsigned long int dayNum;
+	unsigned int yearNum;
+	unsigned int monthNum;
+	subtractYears(_value, &dayNum, &yearNum);
+	subtractMonths(dayNum, yearNum, &dayNum, &monthNum);
 	std::stringstream sstr;
-	sstr << (getDayNum() + 1) << '.' << (getMonthNum() + 1) << '.' << getYearNum();
+	sstr << (dayNum + 1) << '.' << (monthNum + 1) << '.' << yearNum;
 	return sstr.str();
 }
 

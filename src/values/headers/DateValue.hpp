@@ -26,6 +26,9 @@ public:
 	void setMonthNum(unsigned int monthNum);
 	void setDayNum(unsigned int dayNum);
 
+	void set(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum);
+	void setDaysFromTheBegin(unsigned long int dayNum);
+
 	// cloning
 	DateValue * getClone() const override;
 
