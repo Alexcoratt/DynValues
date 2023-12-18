@@ -76,6 +76,7 @@ public:
 	virtual bool isString() const { return false; }
 	virtual bool isChar() const { return false; }
 	virtual bool isIterable() const { return false; }
+	virtual bool isDate() const { return false; }
 
 	virtual std::string getTypeName() const = 0;
 };

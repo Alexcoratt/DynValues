@@ -33,6 +33,7 @@ int main() {
 
 	delete n;
 
+	std::cout << a << ' ' << a.getTypeName() << ' ' << a.at(1) << ' ' << a.at(1).getTypeName() << std::endl;
 	b = VectorValue{{&b}};
 	b.push_back(a);
 	b.push_back(b);
