@@ -35,6 +35,7 @@ void VectorValue::swap(VectorValue & other) {
 	std::swap(_values, other._values);
 }
 
+// cloning
 VectorValue * VectorValue::getClone() const {
 	std::size_t len = _values.size();
 	std::vector<IValue *> values{len};
@@ -45,44 +46,28 @@ VectorValue * VectorValue::getClone() const {
 	return res;
 }
 
+// comparison
 bool VectorValue::operator<(IValue const & other) const {
-	auto otherVector = dynamic_cast<VectorValue const *>(&other);
-	if (!otherVector)
-		throw IncompatibleValueTypesException("VectorValue", "not a VectorValue");
+	if (!other.isIterable())
+		throw IncompatibleValueTypesException(getTypeName(), other.getTypeName());
 	std::size_t len = _values.size();
-	std::size_t otherLen = otherVector->_values.size();
-	if (len != otherLen)
-		return len < otherLen;
+	if (len != other.size())
+		return len < other.size();
 	for (std::size_t i = 0; i < len; ++i)
-		if (_values.at(i) != otherVector->at(i))
-			return _values.at(i) < otherVector->at(i);
+		if (at(i) != other.at(i))
+			return at(i) < other.at(i);
 	return false;
 }
 
-VectorValue::operator std::string() const {
-	std::stringstream str;
-	str << '[';
-	std::size_t len = _values.size();
-	if (len != 0)
-		str << (std::string)*_values[0];
-	for (std::size_t i = 1; i < len; ++i)
-		str << ", " << (std::string)*_values[i];
-	str << ']';
-	return str.str();
-}
+// vector methods
+IValue & VectorValue::operator[](std::size_t const & index) { return *_values[index]; }
+IValue & VectorValue::at(std::size_t const & index) { return *_values.at(index); }
+IValue const & VectorValue::at(std::size_t const & index) const { return *_values.at(index); }
+IValue & VectorValue::back() { return *_values.back(); }
+IValue const & VectorValue::back() const { return *_values.back(); }
 
-VectorValue::operator double() const { throw UnableToTransformException("VectorValue", "DoubleValue"); }
-VectorValue::operator int() const { throw UnableToTransformException("VectorValue", "IntValue"); }
-VectorValue::operator unsigned long() const { throw UnableToTransformException("VectorValue", "UnsignedLongValue"); }
-
-IValue * VectorValue::operator[](std::size_t const & index) { return _values[index]; }
-IValue * VectorValue::at(std::size_t const & index) { return _values.at(index); }
-IValue const * VectorValue::at(std::size_t const & index) const { return _values.at(index); }
-IValue * VectorValue::back() { return _values.back(); }
-IValue const * VectorValue::back() const { return _values.back(); }
-
-void VectorValue::push_back(IValue const * value) {
-	_values.push_back(value->getClone());
+void VectorValue::push_back(IValue const & value) {
+	_values.push_back(value.getClone());
 }
 void VectorValue::pop_back() {
 	IValue * value = _values.back();
@@ -91,5 +76,35 @@ void VectorValue::pop_back() {
 }
 
 std::size_t VectorValue::size() const { return _values.size(); }
-
 bool VectorValue::empty() const { return _values.empty(); }
+
+// transformation
+std::string VectorValue::toString() const {
+	std::stringstream str;
+	str << '[';
+	std::size_t len = _values.size();
+	if (len != 0)
+		str << _values[0]->toString();
+	for (std::size_t i = 1; i < len; ++i)
+		str << ", " << _values[i]->toString();
+	str << ']';
+	return str.str();
+}
+
+char VectorValue::toChar() const { throw UnableToTransformException(getTypeName(), "char"); }
+double VectorValue::toDouble() const { throw UnableToTransformException(getTypeName(), "double"); }
+int VectorValue::toInt() const { throw UnableToTransformException(getTypeName(), "int"); }
+unsigned long int VectorValue::toUnsignedLongInt() const { throw UnableToTransformException(getTypeName(), "unsigned long int"); }
+
+// typechecking
+std::string VectorValue::getTypeName() const {
+	std::stringstream str;
+	str << "VectorValue [";
+	std::size_t len = _values.size();
+	if (len != 0)
+		str << _values[0]->getTypeName();
+	for (std::size_t i = 1; i < len; ++i)
+		str << ", " << _values[i]->getTypeName();
+	str << ']';
+	return str.str();
+}

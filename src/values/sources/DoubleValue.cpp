@@ -20,7 +20,8 @@ DoubleValue * DoubleValue::getClone() const { return new DoubleValue(_value); }
 
 bool DoubleValue::operator<(IValue const & other) const { return _value < double(other); }
 
-DoubleValue::operator std::string() const { return std::to_string(_value); }
-DoubleValue::operator double() const { return _value; }
-DoubleValue::operator int() const { return _value; }
-DoubleValue::operator unsigned long() const { return _value; }
+std::string DoubleValue::toString() const { return std::to_string(_value); }
+char DoubleValue::toChar() const { return _value; }
+double DoubleValue::toDouble() const { return _value; }
+int DoubleValue::toInt() const { return _value; }
+unsigned long DoubleValue::toUnsignedLongInt() const { return _value; }

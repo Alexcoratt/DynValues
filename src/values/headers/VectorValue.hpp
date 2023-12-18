@@ -16,28 +16,36 @@ public:
 
 	void swap(VectorValue & other);
 
+	// cloning
 	VectorValue * getClone() const override;
 
+	// comparison
 	bool operator<(IValue const &) const override;
 
-	operator std::string() const override;
-	operator double() const override;
-	operator int() const override;
-	operator unsigned long() const override;
+	// vector methods
+	IValue & operator[](std::size_t const & index) override;
+	IValue & at(std::size_t const & index) override;
+	IValue const & at(std::size_t const & index) const override;
+	IValue & back() override;
+	IValue const & back() const override;
 
-	IValue * operator[](std::size_t const & index);
-	IValue * at(std::size_t const & index);
-	IValue const * at(std::size_t const & index) const;
-	IValue * back();
-	IValue const * back() const;
+	void push_back(IValue const & value) override;
+	void pop_back() override;
+	std::size_t size() const override;
+	bool empty() const override;
 
-	void push_back(IValue const * value);
-	void pop_back();
-	std::size_t size() const;
-	bool empty() const;
+	// transformation
+	std::string toString() const override;
+	char toChar() const override;
+	double toDouble() const override;
+	int toInt() const override;
+	unsigned long toUnsignedLongInt() const override;
 
-	bool isVector() const override { return true; }
+	// typechecking
+	bool isIterable() const override { return true; }
 	bool isNull() const override { return empty(); }
+
+	std::string getTypeName() const override;
 };
 
 #endif

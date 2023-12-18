@@ -5,6 +5,7 @@
 #include <AutoValue.hpp>
 #include <NullValue.hpp>
 #include <IntValue.hpp>
+#include <VectorValue.hpp>
 
 int main() {
 	AutoValue a = 3;
@@ -28,14 +29,14 @@ int main() {
 
 	IValue * n = aClone;
 	aClone->clear();
-	std::cout << n->isNull() << std::endl;
+	std::cout << n->isNull() << ' ' << n->getTypeName() << std::endl;
 
 	delete n;
 
-	b.clear();
+	b = VectorValue{{&b}};
 	b.push_back(a);
 	b.push_back(b);
-	std::cout << b << std::endl;
+	std::cout << b << ' ' << b.getTypeName() << std::endl;
 
 	return 0;
 }

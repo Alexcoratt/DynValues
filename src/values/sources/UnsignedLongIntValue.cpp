@@ -10,11 +10,17 @@ UnsignedLongIntValue & UnsignedLongIntValue::operator=(UnsignedLongIntValue cons
 
 UnsignedLongIntValue::~UnsignedLongIntValue() {}
 
+// cloning
 UnsignedLongIntValue * UnsignedLongIntValue::getClone() const { return new UnsignedLongIntValue(_value); }
 
+// comparison
 bool UnsignedLongIntValue::operator<(IValue const & other) const { return _value < (unsigned long)other; }
 
-UnsignedLongIntValue::operator std::string() const { return std::to_string(_value); }
-UnsignedLongIntValue::operator double() const { return _value; }
-UnsignedLongIntValue::operator int() const { return _value; }
-UnsignedLongIntValue::operator unsigned long() const { return _value; }
+// vector methods are unappliable
+
+// typechecking
+std::string UnsignedLongIntValue::toString() const { return std::to_string(_value); }
+char UnsignedLongIntValue::toChar() const { return _value; }
+double UnsignedLongIntValue::toDouble() const { return _value; }
+int UnsignedLongIntValue::toInt() const { return _value; }
+unsigned long int UnsignedLongIntValue::toUnsignedLongInt() const { return _value; }

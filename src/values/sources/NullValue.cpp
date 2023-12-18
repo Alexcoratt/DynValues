@@ -10,7 +10,8 @@ bool NullValue::operator<(IValue const & other) const {
 	return true;
 }
 
-NullValue::operator std::string() const { return ""; }
-NullValue::operator double() const { return 0; }
-NullValue::operator int() const { return 0; }
-NullValue::operator unsigned long() const { return 0; }
+std::string NullValue::toString() const { return "null"; }
+char NullValue::toChar() const { return '\0'; }
+double NullValue::toDouble() const { return 0; }
+int NullValue::toInt() const { return 0; }
+unsigned long NullValue::toUnsignedLongInt() const { return 0; }
