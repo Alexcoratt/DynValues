@@ -37,6 +37,8 @@ int main() {
 	b.push_back(a);
 	b.push_back(b);
 	std::cout << b << ' ' << b.getTypeName() << std::endl;
+	std::cout << b[0] << ' ' << b.at(0).getTypeName() << std::endl;
+	std::cout << b.at(1) << ' ' << b[1].getTypeName() << std::endl;
 
 	return 0;
 }

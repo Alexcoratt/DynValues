@@ -53,26 +53,26 @@ bool AutoValue::operator<(IValue const & other) const { return *_value < other; 
 
 // vector methods
 IValue & AutoValue::operator[](std::size_t const & index) {
-	if (index == 0)
-		return *_value;
 	if (isIterable())
 		return (*_value)[index];
+	if (index == 0)
+		return *_value;
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
 IValue & AutoValue::at(std::size_t const & index) {
-	if (index == 0)
-		return *_value;
 	if (isIterable())
 		return _value->at(index);
+	if (index == 0)
+		return *_value;
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
 IValue const & AutoValue::at(std::size_t const & index) const {
-	if (index == 0)
-		return *_value;
 	if (isIterable())
 		return _value->at(index);
+	if (index == 0)
+		return *_value;
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
