@@ -98,6 +98,7 @@ unsigned long int VectorValue::toUnsignedLongInt() const { throw UnableToTransfo
 
 // typechecking
 std::string VectorValue::getTypeName() const {
+	/*
 	std::stringstream str;
 	str << "VectorValue [";
 	std::size_t len = _values.size();
@@ -107,4 +108,6 @@ std::string VectorValue::getTypeName() const {
 		str << ", " << _values[i]->getTypeName();
 	str << ']';
 	return str.str();
+	*/
+	return "VectorValue";
 }
