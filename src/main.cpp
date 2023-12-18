@@ -6,6 +6,7 @@
 #include <NullValue.hpp>
 #include <IntValue.hpp>
 #include <VectorValue.hpp>
+#include <DateValue.hpp>
 
 int main() {
 	AutoValue a = 3;
@@ -40,6 +41,13 @@ int main() {
 	std::cout << b << ' ' << b.getTypeName() << std::endl;
 	std::cout << b[0] << ' ' << b.at(0).getTypeName() << std::endl;
 	std::cout << b.at(1) << ' ' << b[1].getTypeName() << std::endl;
+
+	DateValue date(734258);
+	std::cout << date << std::endl;
+	date.setYearNum(2015);
+	date.setMonthNum(13);
+	date.setDayNum(365);
+	std::cout << date << std::endl;
 
 	return 0;
 }

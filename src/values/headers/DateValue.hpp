@@ -9,22 +9,22 @@ private:
 	unsigned long int _value;
 
 public:
-	DateValue(unsigned long int const & value);
+	DateValue(unsigned long int const & value = 0);
 	DateValue(DateValue const & other);
 	DateValue & operator=(DateValue const & other);
 	~DateValue();
 
 	void swap(DateValue & other);
 
-	// setting
-	void setYearNum(unsigned int yearNum);
-	void setMonthNum(unsigned int monthNum);
-	void setDayNum(unsigned int dayNum);
-
 	// getting
 	unsigned int getYearNum() const;
 	unsigned int getMonthNum() const;
 	unsigned int getDayNum() const;
+
+	// setting
+	void setYearNum(unsigned int yearNum);
+	void setMonthNum(unsigned int monthNum);
+	void setDayNum(unsigned int dayNum);
 
 	// cloning
 	DateValue * getClone() const override;

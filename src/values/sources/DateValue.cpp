@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <stdexcept>
+#include <sstream>
 
 #include "DateValue.hpp"
 
@@ -18,11 +19,6 @@ DateValue::~DateValue() {}
 
 void DateValue::swap(DateValue & other) { std::swap(_value, other._value); }
 
-// setting
-void DateValue::setYearNum(unsigned int yearNum) {}
-void DateValue::setMonthNum(unsigned int monthNum) {}
-void DateValue::setDayNum(unsigned int dayNum) {}
-
 // getting
 bool isLeapYear(unsigned int yearNum) {
 	if (yearNum % 400 == 0)
@@ -33,16 +29,19 @@ bool isLeapYear(unsigned int yearNum) {
 		return true;
 	return false;
 }
+unsigned int getYearDayCount(unsigned int yearNum) {
+	return isLeapYear(yearNum) ? 366 : 365;
+}
 
-void subtractYears(unsigned long int const & daysFromTheBegin, unsigned long int * remains, unsigned int * yearNum) {
+void subtractYears(unsigned long int daysFromTheBegin, unsigned long int * remains, unsigned int * yearNum) {
 	unsigned int yn = 0;
 	unsigned long int rmns = daysFromTheBegin;
-	unsigned int daysInYear;
-	do {
-		daysInYear = isLeapYear(yn) ? 366 : 365;
+	unsigned int daysInYear = getYearDayCount(yn);
+	while (rmns >= daysInYear) {
 		rmns -= daysInYear;
 		++yn;
-	} while (rmns >= daysInYear);
+		daysInYear = getYearDayCount(yn);
+	}
 
 	if (remains)
 		*remains = rmns;
@@ -67,15 +66,91 @@ unsigned int getMonthDayCount(unsigned int monthNum, bool isLeap) {
 	return res;
 }
 
-void subtractMonths(unsigned long int daysFromTheYearBegin, bool isLeap, unsigned long int * remains, unsigned int * monthNum) {
+void subtractMonths(unsigned long int daysFromTheYearBegin, unsigned int yearNum, unsigned long int * remains, unsigned int * monthNum) {
 	unsigned int mn = 0;
 	unsigned long int rmns = daysFromTheYearBegin;
-	unsigned int daysInMonth;
-	do {
-		daysInMonth = getMonthDayCount(mn, isLeap)
+	unsigned int daysInMonth = getMonthDayCount(mn, isLeapYear(yearNum));
+	while (rmns >= daysInMonth) {
+		rmns -= daysInMonth;
+		++mn;
+		daysInMonth = getMonthDayCount(mn, isLeapYear(yearNum));
 	}
+
+	if (remains)
+		*remains = rmns;
+	if (monthNum)
+		*monthNum = mn;
 }
 
-unsigned int DateValue::getMonthNum() const {}
+unsigned int DateValue::getMonthNum() const {
+	unsigned int yearNum;
+	unsigned long int daysRemain;
+	subtractYears(_value, &daysRemain, &yearNum);
+	unsigned int monthNum;
+	subtractMonths(daysRemain, yearNum, nullptr, &monthNum);
+	return monthNum;
+}
 
-unsigned int DateValue::getDayNum() const {}
+unsigned int DateValue::getDayNum() const {
+	unsigned int yearNum;
+	unsigned long int daysRemain;
+	subtractYears(_value, &daysRemain, &yearNum);
+	subtractMonths(daysRemain, yearNum, &daysRemain, nullptr);
+	return daysRemain;
+}
+
+// setting
+unsigned long int sumYear(unsigned long int daysFromTheBegin, unsigned int yearNum) {
+	unsigned long int res = daysFromTheBegin;
+	while (yearNum--)
+		res += getYearDayCount(yearNum);
+	return res;
+}
+
+void DateValue::setYearNum(unsigned int yearNum) {
+	unsigned long int daysRemain;
+	subtractYears(_value, &daysRemain, nullptr);
+	_value = sumYear(daysRemain, yearNum);
+}
+
+unsigned long int sumMonth(unsigned int yearNum, unsigned int monthNum) {
+	unsigned long int res = 0;
+	while (monthNum > 11) {
+		res += getYearDayCount(yearNum++);
+		monthNum -= 12;
+	}
+	while (monthNum--)
+		res += getMonthDayCount(monthNum, isLeapYear(yearNum));
+	return res;
+}
+
+void DateValue::setMonthNum(unsigned int monthNum) {
+	unsigned long int daysRemain;
+	unsigned int yearNum;
+	subtractYears(_value, &daysRemain, &yearNum);
+	unsigned long int notMonthDays;
+	subtractMonths(daysRemain, yearNum, &notMonthDays, nullptr);
+	_value += sumMonth(yearNum, monthNum - 1) - daysRemain + notMonthDays;
+}
+
+void DateValue::setDayNum(unsigned int dayNum) {
+	_value += dayNum - 1 - getDayNum();
+}
+
+// cloning
+DateValue * DateValue::getClone() const { return new DateValue{_value}; }
+
+// comparison
+bool DateValue::operator<(IValue const & other) const { return _value < other.toUnsignedLongInt(); }
+
+// transformation
+std::string DateValue::toString() const {
+	std::stringstream sstr;
+	sstr << (getDayNum() + 1) << '.' << (getMonthNum() + 1) << '.' << getYearNum();
+	return sstr.str();
+}
+
+char DateValue::toChar() const { return _value; }
+double DateValue::toDouble() const { return _value; }
+int DateValue::toInt() const { return _value; }
+unsigned long DateValue::toUnsignedLongInt() const { return _value; }
