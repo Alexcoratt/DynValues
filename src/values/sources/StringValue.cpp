@@ -38,6 +38,8 @@ bool StringValue::operator<(IValue const & other) const {
 		throw IncompatibleValueTypesException{getTypeName(), other.getTypeName()};
 
 	std::size_t len = size();
+	if (other.isChar())
+		return len < 1;
 	if (len != other.size())
 		return len < other.size();
 
