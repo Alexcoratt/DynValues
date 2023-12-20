@@ -10,6 +10,7 @@ private:
 
 public:
 	DateValue(unsigned long int const & value = 0);
+	DateValue(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum);
 	DateValue(DateValue const & other);
 	DateValue & operator=(DateValue const & other);
 	~DateValue();

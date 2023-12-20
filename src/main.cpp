@@ -8,6 +8,8 @@
 #include <VectorValue.hpp>
 #include <DateValue.hpp>
 
+#include <limits.h>
+
 int main() {
 	AutoValue a = 3;
 	AutoValue b = "Hello";
@@ -42,11 +44,12 @@ int main() {
 	std::cout << b[0] << ' ' << b.at(0).getTypeName() << std::endl;
 	std::cout << b.at(1) << ' ' << b[1].getTypeName() << std::endl;
 
-	DateValue date1(734258);
 	DateValue date;
 	std::cout << date << std::endl;
-	date.set(365, 1, 2015);
-	std::cout << date << ' ' << date.getTypeName() << std::endl;
+	date.set(365, 13, 2015);
+	std::cout << date << ' ' << date.toUnsignedLongInt() << std::endl;
+	DateValue date1(ULONG_MAX);
+	std::cout << date1 << std::endl;
 	std::cout << (date > date1) << std::endl;
 
 	return 0;
