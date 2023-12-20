@@ -31,6 +31,12 @@ public:
 	// typechecking
 	bool isDouble() const override { return true; }
 	std::string getTypeName() const override { return "DoubleValue"; }
+
+	// arithmetic operations
+	DoubleValue * add(IValue const * other) const override;
+	DoubleValue * sub(IValue const * other) const override;
+	DoubleValue * mul(IValue const * other) const override;
+	DoubleValue * div(IValue const * other) const override;
 };
 
 #endif

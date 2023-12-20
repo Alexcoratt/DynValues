@@ -49,6 +49,12 @@ public:
 	bool isDate() const override { return true; }
 
 	std::string getTypeName() const override { return "DateValue"; }
+
+	// arithmetic operations
+	DateValue * add(IValue const * other) const override;
+	DateValue * sub(IValue const * other) const override;
+	DateValue * mul(IValue const * other) const override;
+	DateValue * div(IValue const * other) const override;
 };
 
 #endif

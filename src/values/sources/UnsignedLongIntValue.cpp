@@ -24,3 +24,9 @@ char UnsignedLongIntValue::toChar() const { return _value; }
 double UnsignedLongIntValue::toDouble() const { return _value; }
 int UnsignedLongIntValue::toInt() const { return _value; }
 unsigned long int UnsignedLongIntValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+UnsignedLongIntValue * UnsignedLongIntValue::add(IValue const * other) const { return new UnsignedLongIntValue(_value + other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::sub(IValue const * other) const { return new UnsignedLongIntValue(_value - other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::mul(IValue const * other) const { return new UnsignedLongIntValue(_value * other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::div(IValue const * other) const { return new UnsignedLongIntValue(_value / other->toUnsignedLongInt()); }

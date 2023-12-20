@@ -146,3 +146,53 @@ bool AutoValue::isChar() const { return _value->isChar(); }
 bool AutoValue::isIterable() const { return _value->isIterable(); }
 
 std::string AutoValue::getTypeName() const { return "AutoValue: " + _value->getTypeName(); }
+
+// arithmetic operations
+AutoValue * AutoValue::add(IValue const * other) const {
+	AutoValue * res = new AutoValue;
+	res->_value.reset(_value->add(other));
+	return res;
+}
+
+AutoValue * AutoValue::sub(IValue const * other) const {
+	AutoValue * res = new AutoValue;
+	res->_value.reset(_value->sub(other));
+	return res;
+}
+
+AutoValue * AutoValue::mul(IValue const * other) const {
+	AutoValue * res = new AutoValue;
+	res->_value.reset(_value->mul(other));
+	return res;
+}
+
+AutoValue * AutoValue::div(IValue const * other) const {
+	AutoValue * res = new AutoValue;
+	res->_value.reset(_value->div(other));
+	return res;
+}
+
+// arithmetic operators
+AutoValue AutoValue::operator+(IValue const & other) const {
+	AutoValue res;
+	res._value.reset(_value->add(&other));
+	return res;
+}
+
+AutoValue AutoValue::operator-(IValue const & other) const {
+	AutoValue res;
+	res._value.reset(_value->sub(&other));
+	return res;
+}
+
+AutoValue AutoValue::operator*(IValue const & other) const {
+	AutoValue res;
+	res._value.reset(_value->mul(&other));
+	return res;
+}
+
+AutoValue AutoValue::operator/(IValue const & other) const {
+	AutoValue res;
+	res._value.reset(_value->div(&other));
+	return res;
+}

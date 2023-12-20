@@ -12,6 +12,12 @@ VectorValue::VectorValue(std::vector<IValue const *> const & values) : _values{v
 		_values[i] = values.at(i)->getClone();
 }
 
+VectorValue::VectorValue(std::vector<IValue *> const & values) : _values{values.size()} {
+	std::size_t len = _values.size();
+	for (std::size_t i = 0; i < len; ++i)
+		_values[i] = values.at(i)->getClone();
+}
+
 VectorValue::VectorValue(VectorValue const & other) : _values{other._values.size()} {
 	std::size_t len = _values.size();
 	for (std::size_t i = 0; i < len; ++i)
@@ -110,4 +116,23 @@ std::string VectorValue::getTypeName() const {
 	return str.str();
 	*/
 	return "VectorValue";
+}
+
+// arithmetic operations
+VectorValue * VectorValue::add(IValue const * other) const {
+	auto otherSize = other->size();
+	VectorValue * res = new VectorValue(_values);
+	for (std::size_t i = 0; i < otherSize; ++i)
+		res->push_back(other->at(i));
+	return res;
+}
+VectorValue * VectorValue::mul(IValue const * other) const {
+	auto count = other->toUnsignedLongInt();
+	VectorValue * res = new VectorValue;
+	auto const len = _values.size();
+	while (count--) {
+		for (std::size_t i = 0; i < len; ++i)
+			res->push_back(*_values.at(i));
+	}
+	return res;
 }

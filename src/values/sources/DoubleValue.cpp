@@ -25,3 +25,9 @@ char DoubleValue::toChar() const { return _value; }
 double DoubleValue::toDouble() const { return _value; }
 int DoubleValue::toInt() const { return _value; }
 unsigned long DoubleValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+DoubleValue * DoubleValue::add(IValue const * other) const { return new DoubleValue(_value + other->toDouble()); }
+DoubleValue * DoubleValue::sub(IValue const * other) const { return new DoubleValue(_value - other->toDouble()); }
+DoubleValue * DoubleValue::mul(IValue const * other) const { return new DoubleValue(_value * other->toDouble()); }
+DoubleValue * DoubleValue::div(IValue const * other) const { return new DoubleValue(_value / other->toDouble()); }

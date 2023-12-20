@@ -6,6 +6,8 @@
 
 #include "DateValue.hpp"
 
+#define DAYS_IN_400_YEARS 146097
+
 namespace DateValue_auxillary {
 	bool isLeapYear(unsigned int yearNum) {
 		if (yearNum % 400 == 0)
@@ -20,7 +22,6 @@ namespace DateValue_auxillary {
 		return isLeapYear(yearNum) ? 366 : 365;
 	}
 
-	constexpr unsigned int DAYS_IN_400_YEARS = 146097;
 	void subtractYears(unsigned long int daysFromTheBegin, unsigned long int * remains, unsigned int * yearNum) {
 		unsigned int yn = daysFromTheBegin / DAYS_IN_400_YEARS * 400;
 		unsigned long int rmns = daysFromTheBegin % DAYS_IN_400_YEARS;
@@ -85,7 +86,7 @@ namespace DateValue_auxillary {
 }
 
 DateValue::DateValue(unsigned long int const & value) : _value(value) {}
-DateValue::DateValue(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum) { set(dayNum, monthNum, yearNum); }
+DateValue::DateValue(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum) : _value(0) { set(dayNum, monthNum, yearNum); }
 DateValue::DateValue(DateValue const & other) : _value(other._value) {}
 
 DateValue & DateValue::operator=(DateValue const & other) {
@@ -175,3 +176,9 @@ char DateValue::toChar() const { return _value; }
 double DateValue::toDouble() const { return _value; }
 int DateValue::toInt() const { return _value; }
 unsigned long DateValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+DateValue * DateValue::add(IValue const * other) const { return new DateValue(_value + other->toUnsignedLongInt()); }
+DateValue * DateValue::sub(IValue const * other) const { return new DateValue(_value - other->toUnsignedLongInt()); }
+DateValue * DateValue::mul(IValue const * other) const { return new DateValue(_value * other->toUnsignedLongInt()); }
+DateValue * DateValue::div(IValue const * other) const { return new DateValue(_value / other->toUnsignedLongInt()); }

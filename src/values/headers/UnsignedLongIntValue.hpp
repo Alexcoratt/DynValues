@@ -31,6 +31,12 @@ public:
 	// typechecking
 	bool isUnsignedLongInt() const override { return true; }
 	std::string getTypeName() const override { return "UnsignedLongIntValue"; }
+
+	// arithmetic operations
+	UnsignedLongIntValue * add(IValue const * other) const override;
+	UnsignedLongIntValue * sub(IValue const * other) const override;
+	UnsignedLongIntValue * mul(IValue const * other) const override;
+	UnsignedLongIntValue * div(IValue const * other) const override;
 };
 
 #endif

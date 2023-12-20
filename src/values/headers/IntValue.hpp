@@ -31,6 +31,12 @@ public:
 	// typechecking
 	bool isInt() const override { return true; }
 	std::string getTypeName() const override { return "IntValue"; }
+
+	// arithmetic operations
+	IntValue * add(IValue const * other) const override;
+	IntValue * sub(IValue const * other) const override;
+	IntValue * mul(IValue const * other) const override;
+	IntValue * div(IValue const * other) const override;
 };
 
 #endif

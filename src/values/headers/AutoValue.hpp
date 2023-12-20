@@ -14,7 +14,7 @@ public:
 	AutoValue();
 	AutoValue(AutoValue const &);
 	AutoValue(IValue const &);
-	AutoValue(IValue const *);
+	explicit AutoValue(IValue const *);
 	AutoValue(double);
 	AutoValue(int);
 	AutoValue(unsigned long);
@@ -64,6 +64,18 @@ public:
 	bool isIterable() const override;
 
 	std::string getTypeName() const override;
+
+	// arithmetic operations
+	AutoValue * add(IValue const * other) const override;
+	AutoValue * sub(IValue const * other) const override;
+	AutoValue * mul(IValue const * other) const override;
+	AutoValue * div(IValue const * other) const override;
+
+	// arithmetical operators
+	AutoValue operator+(IValue const & other) const;
+	AutoValue operator-(IValue const & other) const;
+	AutoValue operator*(IValue const & other) const;
+	AutoValue operator/(IValue const & other) const;
 };
 
 #endif

@@ -72,3 +72,16 @@ char StringValue::toChar() const { return _value.at(0); }
 double StringValue::toDouble() const { throw UnableToTransformException(getTypeName(), "double", *this); }
 int StringValue::toInt() const { throw UnableToTransformException(getTypeName(), "int", *this); }
 unsigned long int StringValue::toUnsignedLongInt() const { throw UnableToTransformException(getTypeName(), "unsigned long int", *this); }
+
+// arithmetic operations
+StringValue * StringValue::add(IValue const * other) const { return new StringValue{toString() + other->toString()}; }
+
+StringValue * StringValue::mul(IValue const * other) const {
+	StringValue * res = new StringValue;
+	unsigned long int count = other->toUnsignedLongInt();
+	while (count--) {
+		for (auto const & symb : _value)
+			res->_value.push_back(symb);
+	}
+	return res;
+}

@@ -10,6 +10,7 @@ private:
 
 public:
 	VectorValue(std::vector<IValue const *> const & values = {});
+	VectorValue(std::vector<IValue *> const & values);
 	VectorValue(VectorValue const & other);
 	VectorValue & operator=(VectorValue const & other);
 	~VectorValue() override;
@@ -46,6 +47,10 @@ public:
 	bool isNull() const override { return empty(); }
 
 	std::string getTypeName() const override;
+
+	// arithmetic operations
+	VectorValue * add(IValue const * other) const override;
+	VectorValue * mul(IValue const * other) const override;
 };
 
 #endif

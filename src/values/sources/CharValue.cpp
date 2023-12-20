@@ -30,3 +30,9 @@ char CharValue::toChar() const { return _value; }
 double CharValue::toDouble() const { return _value; }
 int CharValue::toInt() const { return _value; }
 unsigned long CharValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+CharValue * CharValue::add(IValue const * other) const { return new CharValue(_value + other->toChar()); }
+CharValue * CharValue::sub(IValue const * other) const { return new CharValue(_value - other->toChar()); }
+CharValue * CharValue::mul(IValue const * other) const { return new CharValue(_value * other->toChar()); }
+CharValue * CharValue::div(IValue const * other) const { return new CharValue(_value / other->toChar()); }

@@ -33,6 +33,12 @@ public:
 	// typechecking
 	bool isChar() const override { return true; }
 	std::string getTypeName() const override { return "CharValue"; }
+
+	// arithmetic operations
+	CharValue * add(IValue const * other) const override;
+	CharValue * sub(IValue const * other) const override;
+	CharValue * mul(IValue const * other) const override;
+	CharValue * div(IValue const * other) const override;
 };
 
 #endif

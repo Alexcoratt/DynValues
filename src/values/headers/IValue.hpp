@@ -6,6 +6,7 @@
 #include <map>
 
 #include "NonIterableValueTypeException.hpp"
+#include "WrongArithmeticOperationException.hpp"
 
 class IValue {
 public:
@@ -79,6 +80,12 @@ public:
 	virtual bool isDate() const { return false; }
 
 	virtual std::string getTypeName() const = 0;
+
+	// arithmetic operations
+	virtual IValue * add(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "addition"}; }
+	virtual IValue * sub(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "subtraction"}; }
+	virtual IValue * mul(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "multiplication"}; }
+	virtual IValue * div(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "division"}; }
 };
 
 inline std::ostream & operator<<(std::ostream & stream, IValue const & value) {

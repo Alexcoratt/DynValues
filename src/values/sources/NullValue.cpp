@@ -10,8 +10,14 @@ bool NullValue::operator<(IValue const & other) const {
 	return true;
 }
 
-std::string NullValue::toString() const { return "null"; }
+std::string NullValue::toString() const { return ""; }
 char NullValue::toChar() const { return '\0'; }
 double NullValue::toDouble() const { return 0; }
 int NullValue::toInt() const { return 0; }
 unsigned long NullValue::toUnsignedLongInt() const { return 0; }
+
+// arithmetic operations
+IValue * NullValue::add(IValue const * other) const { return other->add(this); }
+IValue * NullValue::sub(IValue const * other) const { return other->sub(this); }
+IValue * NullValue::mul(IValue const * other) const { return other->mul(this); }
+IValue * NullValue::div(IValue const * other) const { return other->div(this); }

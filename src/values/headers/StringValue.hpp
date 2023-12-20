@@ -13,7 +13,7 @@ private:
 public:
 	StringValue(std::string const &);
 	StringValue(char const *);
-	StringValue(std::vector<CharValue> const &);
+	StringValue(std::vector<CharValue> const & = {});
 	StringValue(StringValue const &);
 	StringValue & operator=(StringValue const &);
 	~StringValue();
@@ -49,6 +49,10 @@ public:
 	bool isString() const override { return true; }
 	bool isIterable() const override { return true; }
 	std::string getTypeName() const override { return "StringValue"; }
+
+	// arithmetic operations
+	virtual StringValue * add(IValue const * other) const override;
+	virtual StringValue * mul(IValue const * other) const override;
 };
 
 #endif
