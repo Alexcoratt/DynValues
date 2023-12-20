@@ -23,7 +23,6 @@ public:
 	AutoValue(std::vector<IValue const *> const & values);
 	~AutoValue();
 
-	int nestCount() const;
 	void clear();
 
 	AutoValue & operator=(AutoValue const &);

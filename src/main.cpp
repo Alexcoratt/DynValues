@@ -28,8 +28,6 @@ int main() {
 
 	auto aClone = a.getClone();
 
-	std::cout << std::endl << a.nestCount() << ' ' << *aClone << std::endl;
-
 	IValue * n = aClone;
 	aClone->clear();
 	std::cout << n->isNull() << ' ' << n->getTypeName() << std::endl;
@@ -43,7 +41,17 @@ int main() {
 	std::cout << b << ' ' << b.getTypeName() << std::endl;
 	std::cout << b[0] << ' ' << b.at(0).getTypeName() << std::endl;
 	std::cout << b.at(1) << ' ' << b[1].getTypeName() << std::endl;
+	b = (IValue *)&b;
+	b = b;
+	b = (IValue *)&b;
+	b = (IValue *)&b;
+	b = (IValue *)&b;
+	b = (IValue *)&b;
+	b = (IValue *)&b;
+	b = (IValue *)&b;
+	std::cout << b << ' ' << b.getTypeName() << std::endl;
 
+	std::cout << "\nDateValue tests\n";
 	DateValue date;
 	std::cout << date << std::endl;
 	date.set(365, 13, 2015);
