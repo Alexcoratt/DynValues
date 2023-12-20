@@ -1,9 +1,9 @@
 #ifndef DOUBLE_VALUE_HPP
 #define DOUBLE_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class DoubleValue : public IValue {
+class DoubleValue : public AbstractValue {
 private:
 	double _value;
 
@@ -19,7 +19,7 @@ public:
 	DoubleValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// transformation
 	std::string toString() const override;
@@ -33,10 +33,10 @@ public:
 	std::string getTypeName() const override { return "DoubleValue"; }
 
 	// arithmetic operations
-	DoubleValue * add(IValue const * other) const override;
-	DoubleValue * sub(IValue const * other) const override;
-	DoubleValue * mul(IValue const * other) const override;
-	DoubleValue * div(IValue const * other) const override;
+	DoubleValue * add(AbstractValue const * other) const override;
+	DoubleValue * sub(AbstractValue const * other) const override;
+	DoubleValue * mul(AbstractValue const * other) const override;
+	DoubleValue * div(AbstractValue const * other) const override;
 };
 
 #endif

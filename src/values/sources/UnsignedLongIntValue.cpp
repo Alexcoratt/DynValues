@@ -14,7 +14,7 @@ UnsignedLongIntValue::~UnsignedLongIntValue() {}
 UnsignedLongIntValue * UnsignedLongIntValue::getClone() const { return new UnsignedLongIntValue(_value); }
 
 // comparison
-bool UnsignedLongIntValue::operator<(IValue const & other) const { return _value < (unsigned long)other; }
+bool UnsignedLongIntValue::operator<(AbstractValue const & other) const { return _value < (unsigned long)other; }
 
 // vector methods are unappliable
 
@@ -26,7 +26,7 @@ int UnsignedLongIntValue::toInt() const { return _value; }
 unsigned long int UnsignedLongIntValue::toUnsignedLongInt() const { return _value; }
 
 // arithmetic operations
-UnsignedLongIntValue * UnsignedLongIntValue::add(IValue const * other) const { return new UnsignedLongIntValue(_value + other->toUnsignedLongInt()); }
-UnsignedLongIntValue * UnsignedLongIntValue::sub(IValue const * other) const { return new UnsignedLongIntValue(_value - other->toUnsignedLongInt()); }
-UnsignedLongIntValue * UnsignedLongIntValue::mul(IValue const * other) const { return new UnsignedLongIntValue(_value * other->toUnsignedLongInt()); }
-UnsignedLongIntValue * UnsignedLongIntValue::div(IValue const * other) const { return new UnsignedLongIntValue(_value / other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::add(AbstractValue const * other) const { return new UnsignedLongIntValue(_value + other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::sub(AbstractValue const * other) const { return new UnsignedLongIntValue(_value - other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::mul(AbstractValue const * other) const { return new UnsignedLongIntValue(_value * other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::div(AbstractValue const * other) const { return new UnsignedLongIntValue(_value / other->toUnsignedLongInt()); }

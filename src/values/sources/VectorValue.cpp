@@ -6,13 +6,13 @@
 #include "UnableToTransformException.hpp"
 #include "IncompatibleValueTypesException.hpp"
 
-VectorValue::VectorValue(std::vector<IValue const *> const & values) : _values{values.size()} {
+VectorValue::VectorValue(std::vector<AbstractValue const *> const & values) : _values{values.size()} {
 	std::size_t len = _values.size();
 	for (std::size_t i = 0; i < len; ++i)
 		_values[i] = values.at(i)->getClone();
 }
 
-VectorValue::VectorValue(std::vector<IValue *> const & values) : _values{values.size()} {
+VectorValue::VectorValue(std::vector<AbstractValue *> const & values) : _values{values.size()} {
 	std::size_t len = _values.size();
 	for (std::size_t i = 0; i < len; ++i)
 		_values[i] = values.at(i)->getClone();
@@ -44,7 +44,7 @@ void VectorValue::swap(VectorValue & other) {
 // cloning
 VectorValue * VectorValue::getClone() const {
 	std::size_t len = _values.size();
-	std::vector<IValue *> values{len};
+	std::vector<AbstractValue *> values{len};
 	for (std::size_t i = 0; i < len; ++i)
 		values[i] = _values.at(i)->getClone();
 	VectorValue * res = new VectorValue;
@@ -53,7 +53,7 @@ VectorValue * VectorValue::getClone() const {
 }
 
 // comparison
-bool VectorValue::operator<(IValue const & other) const {
+bool VectorValue::operator<(AbstractValue const & other) const {
 	if (!other.isIterable())
 		throw IncompatibleValueTypesException(getTypeName(), other.getTypeName());
 	std::size_t len = _values.size();
@@ -66,17 +66,17 @@ bool VectorValue::operator<(IValue const & other) const {
 }
 
 // vector methods
-IValue & VectorValue::operator[](std::size_t const & index) { return *_values[index]; }
-IValue & VectorValue::at(std::size_t const & index) { return *_values.at(index); }
-IValue const & VectorValue::at(std::size_t const & index) const { return *_values.at(index); }
-IValue & VectorValue::back() { return *_values.back(); }
-IValue const & VectorValue::back() const { return *_values.back(); }
+AbstractValue & VectorValue::operator[](std::size_t const & index) { return *_values[index]; }
+AbstractValue & VectorValue::at(std::size_t const & index) { return *_values.at(index); }
+AbstractValue const & VectorValue::at(std::size_t const & index) const { return *_values.at(index); }
+AbstractValue & VectorValue::back() { return *_values.back(); }
+AbstractValue const & VectorValue::back() const { return *_values.back(); }
 
-void VectorValue::push_back(IValue const & value) {
+void VectorValue::push_back(AbstractValue const & value) {
 	_values.push_back(value.getClone());
 }
 void VectorValue::pop_back() {
-	IValue * value = _values.back();
+	AbstractValue * value = _values.back();
 	_values.pop_back();
 	delete value;
 }
@@ -119,14 +119,14 @@ std::string VectorValue::getTypeName() const {
 }
 
 // arithmetic operations
-VectorValue * VectorValue::add(IValue const * other) const {
+VectorValue * VectorValue::add(AbstractValue const * other) const {
 	auto otherSize = other->size();
 	VectorValue * res = new VectorValue(_values);
 	for (std::size_t i = 0; i < otherSize; ++i)
 		res->push_back(other->at(i));
 	return res;
 }
-VectorValue * VectorValue::mul(IValue const * other) const {
+VectorValue * VectorValue::mul(AbstractValue const * other) const {
 	auto count = other->toUnsignedLongInt();
 	VectorValue * res = new VectorValue;
 	auto const len = _values.size();

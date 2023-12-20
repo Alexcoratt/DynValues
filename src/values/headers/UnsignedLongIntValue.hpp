@@ -1,9 +1,9 @@
 #ifndef UNSIGNED_LONG_INT_VALUE_HPP
 #define UNSIGNED_LONG_INT_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class UnsignedLongIntValue : public IValue {
+class UnsignedLongIntValue : public AbstractValue {
 private:
 	unsigned long _value;
 
@@ -19,7 +19,7 @@ public:
 	UnsignedLongIntValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// transformation
 	std::string toString() const override;
@@ -33,10 +33,10 @@ public:
 	std::string getTypeName() const override { return "UnsignedLongIntValue"; }
 
 	// arithmetic operations
-	UnsignedLongIntValue * add(IValue const * other) const override;
-	UnsignedLongIntValue * sub(IValue const * other) const override;
-	UnsignedLongIntValue * mul(IValue const * other) const override;
-	UnsignedLongIntValue * div(IValue const * other) const override;
+	UnsignedLongIntValue * add(AbstractValue const * other) const override;
+	UnsignedLongIntValue * sub(AbstractValue const * other) const override;
+	UnsignedLongIntValue * mul(AbstractValue const * other) const override;
+	UnsignedLongIntValue * div(AbstractValue const * other) const override;
 };
 
 #endif

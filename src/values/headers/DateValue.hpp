@@ -1,10 +1,9 @@
 #ifndef DATE_VALUE_HPP
 #define DATE_VALUE_HPP
 
-#include <chrono>
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class DateValue : public IValue {
+class DateValue : public AbstractValue {
 private:
 	unsigned long int _value;
 
@@ -34,7 +33,7 @@ public:
 	DateValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods are unappliable
 
@@ -51,10 +50,10 @@ public:
 	std::string getTypeName() const override { return "DateValue"; }
 
 	// arithmetic operations
-	DateValue * add(IValue const * other) const override;
-	DateValue * sub(IValue const * other) const override;
-	DateValue * mul(IValue const * other) const override;
-	DateValue * div(IValue const * other) const override;
+	DateValue * add(AbstractValue const * other) const override;
+	DateValue * sub(AbstractValue const * other) const override;
+	DateValue * mul(AbstractValue const * other) const override;
+	DateValue * div(AbstractValue const * other) const override;
 };
 
 #endif

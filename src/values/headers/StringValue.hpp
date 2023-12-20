@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 #include "CharValue.hpp"
 
-class StringValue : public IValue {
+class StringValue : public AbstractValue {
 private:
 	std::vector<CharValue> _value;
 
@@ -24,7 +24,7 @@ public:
 	StringValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods
 	CharValue & operator[](std::size_t const & index) override;
@@ -33,7 +33,7 @@ public:
 	CharValue & back() override;
 	CharValue const & back() const override;
 
-	void push_back(IValue const & value) override;
+	void push_back(AbstractValue const & value) override;
 	void pop_back() override;
 	std::size_t size() const override;
 	bool empty() const override;
@@ -51,8 +51,8 @@ public:
 	std::string getTypeName() const override { return "StringValue"; }
 
 	// arithmetic operations
-	virtual StringValue * add(IValue const * other) const override;
-	virtual StringValue * mul(IValue const * other) const override;
+	virtual StringValue * add(AbstractValue const * other) const override;
+	virtual StringValue * mul(AbstractValue const * other) const override;
 };
 
 #endif

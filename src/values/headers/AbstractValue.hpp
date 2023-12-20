@@ -1,5 +1,5 @@
-#ifndef I_VALUE_HPP
-#define I_VALUE_HPP
+#ifndef ABSTRACT_VALUE_HPP
+#define ABSTRACT_VALUE_HPP
 
 #include <string>
 #include <vector>
@@ -8,39 +8,39 @@
 #include "NonIterableValueTypeException.hpp"
 #include "WrongArithmeticOperationException.hpp"
 
-class IValue {
+class AbstractValue {
 public:
-	virtual ~IValue() {}
+	virtual ~AbstractValue() {}
 
 	// cloning
-	virtual IValue * getClone() const = 0;	// returns pointer to the heap located object
+	virtual AbstractValue * getClone() const = 0;	// returns pointer to the heap located object
 
 	// comparison
-	virtual bool operator<(IValue const &) const = 0;
-	virtual bool operator>(IValue const & other) const { return other < *this; }
-	virtual bool operator==(IValue const & other) const { return !(*this < other || *this > other); }
-	virtual bool operator!=(IValue const & other) const { return !(*this == other); }
-	virtual bool operator>=(IValue const & other) const { return !(*this < other); }
-	virtual bool operator<=(IValue const & other) const { return !(*this > other); }
+	virtual bool operator<(AbstractValue const &) const = 0;
+	virtual bool operator>(AbstractValue const & other) const { return other < *this; }
+	virtual bool operator==(AbstractValue const & other) const { return !(*this < other || *this > other); }
+	virtual bool operator!=(AbstractValue const & other) const { return !(*this == other); }
+	virtual bool operator>=(AbstractValue const & other) const { return !(*this < other); }
+	virtual bool operator<=(AbstractValue const & other) const { return !(*this > other); }
 
 	// vector methods
-	virtual IValue & operator[](std::size_t const & index) {
+	virtual AbstractValue & operator[](std::size_t const & index) {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
-	virtual IValue & at(std::size_t const & index) {
+	virtual AbstractValue & at(std::size_t const & index) {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
-	virtual IValue const & at(std::size_t const & index) const {
+	virtual AbstractValue const & at(std::size_t const & index) const {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
-	virtual IValue & back() {
+	virtual AbstractValue & back() {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
-	virtual IValue const & back() const {
+	virtual AbstractValue const & back() const {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
 
-	virtual void push_back(IValue const & value) {
+	virtual void push_back(AbstractValue const & value) {
 		throw NonIterableValueTypeException{getTypeName()};
 	}
 	virtual void pop_back() {
@@ -82,13 +82,13 @@ public:
 	virtual std::string getTypeName() const = 0;
 
 	// arithmetic operations
-	virtual IValue * add(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "addition"}; }
-	virtual IValue * sub(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "subtraction"}; }
-	virtual IValue * mul(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "multiplication"}; }
-	virtual IValue * div(IValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "division"}; }
+	virtual AbstractValue * add(AbstractValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "addition"}; }
+	virtual AbstractValue * sub(AbstractValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "subtraction"}; }
+	virtual AbstractValue * mul(AbstractValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "multiplication"}; }
+	virtual AbstractValue * div(AbstractValue const * other) const { throw WrongArithmeticOperationException{getTypeName(), "division"}; }
 };
 
-inline std::ostream & operator<<(std::ostream & stream, IValue const & value) {
+inline std::ostream & operator<<(std::ostream & stream, AbstractValue const & value) {
 	stream << std::string(value);
 	return stream;
 }

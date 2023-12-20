@@ -12,14 +12,14 @@
 
 AutoValue::AutoValue() : _value(new NullValue) {}
 AutoValue::AutoValue(AutoValue const & other) : _value(other._value->getClone()) {}
-AutoValue::AutoValue(IValue const & value) {
+AutoValue::AutoValue(AbstractValue const & value) {
 	auto autoValue = dynamic_cast<AutoValue const *>(&value);
 	if (autoValue)
 		_value.reset(autoValue->_value->getClone());
 	else
 		_value.reset(value.getClone());
 }
-AutoValue::AutoValue(IValue const * value) {
+AutoValue::AutoValue(AbstractValue const * value) {
 	auto autoValue = dynamic_cast<AutoValue const *>(value);
 	if (autoValue)
 		_value.reset(autoValue->_value->getClone());
@@ -32,7 +32,7 @@ AutoValue::AutoValue(unsigned long value) : _value(new UnsignedLongIntValue(valu
 AutoValue::AutoValue(std::string const & value) : _value(new StringValue(value)) {}
 AutoValue::AutoValue(char const * value) : _value(new StringValue(value)) {}
 
-AutoValue::AutoValue(std::vector<IValue const *> const & values) : _value(new VectorValue{values}) {}
+AutoValue::AutoValue(std::vector<AbstractValue const *> const & values) : _value(new VectorValue{values}) {}
 
 AutoValue & AutoValue::operator=(AutoValue const & other) {
 	if (this != &other) {
@@ -54,10 +54,10 @@ AutoValue * AutoValue::getClone() const {
 }
 
 // comparison
-bool AutoValue::operator<(IValue const & other) const { return *_value < other; }
+bool AutoValue::operator<(AbstractValue const & other) const { return *_value < other; }
 
 // vector methods
-IValue & AutoValue::operator[](std::size_t const & index) {
+AbstractValue & AutoValue::operator[](std::size_t const & index) {
 	if (isIterable())
 		return (*_value)[index];
 	if (index == 0)
@@ -65,7 +65,7 @@ IValue & AutoValue::operator[](std::size_t const & index) {
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
-IValue & AutoValue::at(std::size_t const & index) {
+AbstractValue & AutoValue::at(std::size_t const & index) {
 	if (isIterable())
 		return _value->at(index);
 	if (index == 0)
@@ -73,7 +73,7 @@ IValue & AutoValue::at(std::size_t const & index) {
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
-IValue const & AutoValue::at(std::size_t const & index) const {
+AbstractValue const & AutoValue::at(std::size_t const & index) const {
 	if (isIterable())
 		return _value->at(index);
 	if (index == 0)
@@ -81,19 +81,19 @@ IValue const & AutoValue::at(std::size_t const & index) const {
 	throw std::out_of_range("Index " + std::to_string(index) + " is out of range 1");
 }
 
-IValue & AutoValue::back() {
+AbstractValue & AutoValue::back() {
 	if (isIterable())
 		return _value->back();
 	return *_value;
 }
 
-IValue const & AutoValue::back() const {
+AbstractValue const & AutoValue::back() const {
 	if (isIterable())
 		return _value->back();
 	return *_value;
 }
 
-void AutoValue::push_back(IValue const & value) {
+void AutoValue::push_back(AbstractValue const & value) {
 	if (isIterable()) {
 		_value->push_back(value);
 		return;
@@ -148,50 +148,50 @@ bool AutoValue::isIterable() const { return _value->isIterable(); }
 std::string AutoValue::getTypeName() const { return "AutoValue: " + _value->getTypeName(); }
 
 // arithmetic operations
-AutoValue * AutoValue::add(IValue const * other) const {
+AutoValue * AutoValue::add(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
 	res->_value.reset(_value->add(other));
 	return res;
 }
 
-AutoValue * AutoValue::sub(IValue const * other) const {
+AutoValue * AutoValue::sub(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
 	res->_value.reset(_value->sub(other));
 	return res;
 }
 
-AutoValue * AutoValue::mul(IValue const * other) const {
+AutoValue * AutoValue::mul(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
 	res->_value.reset(_value->mul(other));
 	return res;
 }
 
-AutoValue * AutoValue::div(IValue const * other) const {
+AutoValue * AutoValue::div(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
 	res->_value.reset(_value->div(other));
 	return res;
 }
 
 // arithmetic operators
-AutoValue AutoValue::operator+(IValue const & other) const {
+AutoValue AutoValue::operator+(AbstractValue const & other) const {
 	AutoValue res;
 	res._value.reset(_value->add(&other));
 	return res;
 }
 
-AutoValue AutoValue::operator-(IValue const & other) const {
+AutoValue AutoValue::operator-(AbstractValue const & other) const {
 	AutoValue res;
 	res._value.reset(_value->sub(&other));
 	return res;
 }
 
-AutoValue AutoValue::operator*(IValue const & other) const {
+AutoValue AutoValue::operator*(AbstractValue const & other) const {
 	AutoValue res;
 	res._value.reset(_value->mul(&other));
 	return res;
 }
 
-AutoValue AutoValue::operator/(IValue const & other) const {
+AutoValue AutoValue::operator/(AbstractValue const & other) const {
 	AutoValue res;
 	res._value.reset(_value->div(&other));
 	return res;

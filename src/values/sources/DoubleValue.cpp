@@ -18,7 +18,7 @@ void DoubleValue::swap(DoubleValue & other) { std::swap(_value, other._value); }
 
 DoubleValue * DoubleValue::getClone() const { return new DoubleValue(_value); }
 
-bool DoubleValue::operator<(IValue const & other) const { return _value < double(other); }
+bool DoubleValue::operator<(AbstractValue const & other) const { return _value < double(other); }
 
 std::string DoubleValue::toString() const { return std::to_string(_value); }
 char DoubleValue::toChar() const { return _value; }
@@ -27,7 +27,7 @@ int DoubleValue::toInt() const { return _value; }
 unsigned long DoubleValue::toUnsignedLongInt() const { return _value; }
 
 // arithmetic operations
-DoubleValue * DoubleValue::add(IValue const * other) const { return new DoubleValue(_value + other->toDouble()); }
-DoubleValue * DoubleValue::sub(IValue const * other) const { return new DoubleValue(_value - other->toDouble()); }
-DoubleValue * DoubleValue::mul(IValue const * other) const { return new DoubleValue(_value * other->toDouble()); }
-DoubleValue * DoubleValue::div(IValue const * other) const { return new DoubleValue(_value / other->toDouble()); }
+DoubleValue * DoubleValue::add(AbstractValue const * other) const { return new DoubleValue(_value + other->toDouble()); }
+DoubleValue * DoubleValue::sub(AbstractValue const * other) const { return new DoubleValue(_value - other->toDouble()); }
+DoubleValue * DoubleValue::mul(AbstractValue const * other) const { return new DoubleValue(_value * other->toDouble()); }
+DoubleValue * DoubleValue::div(AbstractValue const * other) const { return new DoubleValue(_value / other->toDouble()); }

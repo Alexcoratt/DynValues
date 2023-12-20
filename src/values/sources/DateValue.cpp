@@ -158,7 +158,7 @@ void DateValue::setDaysFromTheBegin(unsigned long int dayNum) { _value = dayNum;
 DateValue * DateValue::getClone() const { return new DateValue{_value}; }
 
 // comparison
-bool DateValue::operator<(IValue const & other) const { return _value < other.toUnsignedLongInt(); }
+bool DateValue::operator<(AbstractValue const & other) const { return _value < other.toUnsignedLongInt(); }
 
 // transformation
 std::string DateValue::toString() const {
@@ -178,7 +178,7 @@ int DateValue::toInt() const { return _value; }
 unsigned long DateValue::toUnsignedLongInt() const { return _value; }
 
 // arithmetic operations
-DateValue * DateValue::add(IValue const * other) const { return new DateValue(_value + other->toUnsignedLongInt()); }
-DateValue * DateValue::sub(IValue const * other) const { return new DateValue(_value - other->toUnsignedLongInt()); }
-DateValue * DateValue::mul(IValue const * other) const { return new DateValue(_value * other->toUnsignedLongInt()); }
-DateValue * DateValue::div(IValue const * other) const { return new DateValue(_value / other->toUnsignedLongInt()); }
+DateValue * DateValue::add(AbstractValue const * other) const { return new DateValue(_value + other->toUnsignedLongInt()); }
+DateValue * DateValue::sub(AbstractValue const * other) const { return new DateValue(_value - other->toUnsignedLongInt()); }
+DateValue * DateValue::mul(AbstractValue const * other) const { return new DateValue(_value * other->toUnsignedLongInt()); }
+DateValue * DateValue::div(AbstractValue const * other) const { return new DateValue(_value / other->toUnsignedLongInt()); }

@@ -1,9 +1,9 @@
 #ifndef NULL_VALUE_HPP
 #define NULL_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class NullValue : public IValue {
+class NullValue : public AbstractValue {
 public:
 	NullValue & operator=(NullValue const &);
 
@@ -11,14 +11,14 @@ public:
 	NullValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods
-	IValue & operator[](std::size_t const & index) override { return *this; }
-	IValue & at(std::size_t const & index) override { return *this; }
-	IValue const & at(std::size_t const & index) const override { return *this; }
-	IValue & back() override { return *this; }
-	IValue const & back() const override { return *this; }
+	AbstractValue & operator[](std::size_t const & index) override { return *this; }
+	AbstractValue & at(std::size_t const & index) override { return *this; }
+	AbstractValue const & at(std::size_t const & index) const override { return *this; }
+	AbstractValue & back() override { return *this; }
+	AbstractValue const & back() const override { return *this; }
 
 	std::size_t size() const override { return 0; }
 	bool empty() const override { return true; }
@@ -35,10 +35,10 @@ public:
 	std::string getTypeName() const override { return "NullValue"; }
 
 	// arithmetic operations
-	IValue * add(IValue const * other) const override;
-	IValue * sub(IValue const * other) const override;
-	IValue * mul(IValue const * other) const override;
-	IValue * div(IValue const * other) const override;
+	AbstractValue * add(AbstractValue const * other) const override;
+	AbstractValue * sub(AbstractValue const * other) const override;
+	AbstractValue * mul(AbstractValue const * other) const override;
+	AbstractValue * div(AbstractValue const * other) const override;
 };
 
 #endif

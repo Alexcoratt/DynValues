@@ -33,7 +33,7 @@ void StringValue::swap(StringValue & other) { std::swap(_value, other._value); }
 StringValue * StringValue::getClone() const { return new StringValue(_value); }
 
 // comparison
-bool StringValue::operator<(IValue const & other) const {
+bool StringValue::operator<(AbstractValue const & other) const {
 	if (!other.isString() && !other.isChar())
 		throw IncompatibleValueTypesException{getTypeName(), other.getTypeName()};
 
@@ -56,7 +56,7 @@ CharValue const & StringValue::at(std::size_t const & index) const { return _val
 CharValue & StringValue::back() { return _value.back(); }
 CharValue const & StringValue::back() const { return _value.back(); }
 
-void StringValue::push_back(IValue const & value) {
+void StringValue::push_back(AbstractValue const & value) {
 	auto const line = value.toString();
 	for (char const symb : line)
 		_value.push_back(symb);
@@ -74,9 +74,9 @@ int StringValue::toInt() const { throw UnableToTransformException(getTypeName(),
 unsigned long int StringValue::toUnsignedLongInt() const { throw UnableToTransformException(getTypeName(), "unsigned long int", *this); }
 
 // arithmetic operations
-StringValue * StringValue::add(IValue const * other) const { return new StringValue{toString() + other->toString()}; }
+StringValue * StringValue::add(AbstractValue const * other) const { return new StringValue{toString() + other->toString()}; }
 
-StringValue * StringValue::mul(IValue const * other) const {
+StringValue * StringValue::mul(AbstractValue const * other) const {
 	StringValue * res = new StringValue;
 	unsigned long int count = other->toUnsignedLongInt();
 	while (count--) {

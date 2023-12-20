@@ -2,15 +2,15 @@
 #define VECTOR_VALUE_HPP
 
 #include <vector>
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class VectorValue : public IValue {
+class VectorValue : public AbstractValue {
 private:
-	std::vector<IValue *> _values;
+	std::vector<AbstractValue *> _values;
 
 public:
-	VectorValue(std::vector<IValue const *> const & values = {});
-	VectorValue(std::vector<IValue *> const & values);
+	VectorValue(std::vector<AbstractValue const *> const & values = {});
+	VectorValue(std::vector<AbstractValue *> const & values);
 	VectorValue(VectorValue const & other);
 	VectorValue & operator=(VectorValue const & other);
 	~VectorValue() override;
@@ -21,16 +21,16 @@ public:
 	VectorValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods
-	IValue & operator[](std::size_t const & index) override;
-	IValue & at(std::size_t const & index) override;
-	IValue const & at(std::size_t const & index) const override;
-	IValue & back() override;
-	IValue const & back() const override;
+	AbstractValue & operator[](std::size_t const & index) override;
+	AbstractValue & at(std::size_t const & index) override;
+	AbstractValue const & at(std::size_t const & index) const override;
+	AbstractValue & back() override;
+	AbstractValue const & back() const override;
 
-	void push_back(IValue const & value) override;
+	void push_back(AbstractValue const & value) override;
 	void pop_back() override;
 	std::size_t size() const override;
 	bool empty() const override;
@@ -49,8 +49,8 @@ public:
 	std::string getTypeName() const override;
 
 	// arithmetic operations
-	VectorValue * add(IValue const * other) const override;
-	VectorValue * mul(IValue const * other) const override;
+	VectorValue * add(AbstractValue const * other) const override;
+	VectorValue * mul(AbstractValue const * other) const override;
 };
 
 #endif

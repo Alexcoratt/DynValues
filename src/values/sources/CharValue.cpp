@@ -22,7 +22,7 @@ void CharValue::swap(CharValue & other) {
 CharValue * CharValue::getClone() const { return new CharValue{*this}; }
 
 // comparison
-bool CharValue::operator<(IValue const & other) const { return _value < other.toChar(); }
+bool CharValue::operator<(AbstractValue const & other) const { return _value < other.toChar(); }
 
 // transformation
 std::string CharValue::toString() const { return std::string{_value}; }
@@ -32,7 +32,7 @@ int CharValue::toInt() const { return _value; }
 unsigned long CharValue::toUnsignedLongInt() const { return _value; }
 
 // arithmetic operations
-CharValue * CharValue::add(IValue const * other) const { return new CharValue(_value + other->toChar()); }
-CharValue * CharValue::sub(IValue const * other) const { return new CharValue(_value - other->toChar()); }
-CharValue * CharValue::mul(IValue const * other) const { return new CharValue(_value * other->toChar()); }
-CharValue * CharValue::div(IValue const * other) const { return new CharValue(_value / other->toChar()); }
+CharValue * CharValue::add(AbstractValue const * other) const { return new CharValue(_value + other->toChar()); }
+CharValue * CharValue::sub(AbstractValue const * other) const { return new CharValue(_value - other->toChar()); }
+CharValue * CharValue::mul(AbstractValue const * other) const { return new CharValue(_value * other->toChar()); }
+CharValue * CharValue::div(AbstractValue const * other) const { return new CharValue(_value / other->toChar()); }

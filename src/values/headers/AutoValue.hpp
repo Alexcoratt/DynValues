@@ -4,23 +4,23 @@
 #include <memory>
 #include <vector>
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class AutoValue : public IValue {
+class AutoValue : public AbstractValue {
 private:
-	std::shared_ptr<IValue> _value;
+	std::shared_ptr<AbstractValue> _value;
 
 public:
 	AutoValue();
 	AutoValue(AutoValue const &);
-	AutoValue(IValue const &);
-	explicit AutoValue(IValue const *);
+	AutoValue(AbstractValue const &);
+	explicit AutoValue(AbstractValue const *);
 	AutoValue(double);
 	AutoValue(int);
 	AutoValue(unsigned long);
 	AutoValue(std::string const &);
 	AutoValue(char const *);
-	AutoValue(std::vector<IValue const *> const & values);
+	AutoValue(std::vector<AbstractValue const *> const & values);
 	~AutoValue();
 
 	void clear();
@@ -33,16 +33,16 @@ public:
 	AutoValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods
-	IValue & operator[](std::size_t const & index) override;
-	IValue & at(std::size_t const & index) override;
-	IValue const & at(std::size_t const & index) const override;
-	IValue & back() override;
-	IValue const & back() const override;
+	AbstractValue & operator[](std::size_t const & index) override;
+	AbstractValue & at(std::size_t const & index) override;
+	AbstractValue const & at(std::size_t const & index) const override;
+	AbstractValue & back() override;
+	AbstractValue const & back() const override;
 
-	void push_back(IValue const & value) override;
+	void push_back(AbstractValue const & value) override;
 	void pop_back() override;
 	std::size_t size() const override;
 	bool empty() const override;
@@ -66,16 +66,16 @@ public:
 	std::string getTypeName() const override;
 
 	// arithmetic operations
-	AutoValue * add(IValue const * other) const override;
-	AutoValue * sub(IValue const * other) const override;
-	AutoValue * mul(IValue const * other) const override;
-	AutoValue * div(IValue const * other) const override;
+	AutoValue * add(AbstractValue const * other) const override;
+	AutoValue * sub(AbstractValue const * other) const override;
+	AutoValue * mul(AbstractValue const * other) const override;
+	AutoValue * div(AbstractValue const * other) const override;
 
 	// arithmetical operators
-	AutoValue operator+(IValue const & other) const;
-	AutoValue operator-(IValue const & other) const;
-	AutoValue operator*(IValue const & other) const;
-	AutoValue operator/(IValue const & other) const;
+	AutoValue operator+(AbstractValue const & other) const;
+	AutoValue operator-(AbstractValue const & other) const;
+	AutoValue operator*(AbstractValue const & other) const;
+	AutoValue operator/(AbstractValue const & other) const;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include <IValue.hpp>
+#include <AbstractValue.hpp>
 #include <AutoValue.hpp>
 #include <NullValue.hpp>
 #include <IntValue.hpp>
@@ -18,7 +18,11 @@ int main() {
 	DateValue date(14, 9, 2005);
 
 	std::cout << (b + (a + a) + a).getTypeName() << '\t' << (b + (a + a) + a) << std::endl;
-	std::cout << (b * a + StringValue("hi") + date) * (AutoValue(date) / AutoValue(30000)) << std::endl;
+
+	AutoValue test = ((b + (a + a) + a) * a + StringValue("hi") + date) * (AutoValue(date) / AutoValue(30000));
+	std::cout << test << std::endl;
+
+	std::cout << AutoValue(date) + AutoValue(1) << std::endl;
 
 	return 0;
 }

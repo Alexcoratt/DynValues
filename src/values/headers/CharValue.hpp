@@ -1,9 +1,9 @@
 #ifndef CHAR_VALUE_HPP
 #define CHAR_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class CharValue : public IValue {
+class CharValue : public AbstractValue {
 private:
 	char _value;
 
@@ -19,7 +19,7 @@ public:
 	CharValue * getClone() const override;
 
 	// comparison
-	bool operator<(IValue const &) const override;
+	bool operator<(AbstractValue const &) const override;
 
 	// vector methods are unappliable
 
@@ -35,10 +35,10 @@ public:
 	std::string getTypeName() const override { return "CharValue"; }
 
 	// arithmetic operations
-	CharValue * add(IValue const * other) const override;
-	CharValue * sub(IValue const * other) const override;
-	CharValue * mul(IValue const * other) const override;
-	CharValue * div(IValue const * other) const override;
+	CharValue * add(AbstractValue const * other) const override;
+	CharValue * sub(AbstractValue const * other) const override;
+	CharValue * mul(AbstractValue const * other) const override;
+	CharValue * div(AbstractValue const * other) const override;
 };
 
 #endif
