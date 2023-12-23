@@ -62,6 +62,7 @@ public:
 	bool isString() const override;
 	bool isChar() const override;
 	bool isIterable() const override;
+	bool isDate() const override;
 
 	std::string getTypeName() const override;
 

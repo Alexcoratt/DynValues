@@ -144,6 +144,7 @@ bool AutoValue::isDouble() const { return _value->isDouble(); }
 bool AutoValue::isString() const { return _value->isString(); }
 bool AutoValue::isChar() const { return _value->isChar(); }
 bool AutoValue::isIterable() const { return _value->isIterable(); }
+bool AutoValue::isDate() const { return _value->isDate(); }
 
 std::string AutoValue::getTypeName() const { return "AutoValue: " + _value->getTypeName(); }
 
