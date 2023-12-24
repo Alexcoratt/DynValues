@@ -44,6 +44,7 @@ public:
 
 	// typechecking
 	bool isIterable() const override { return true; }
+	bool isVector() const override { return true; }
 	bool isNull() const override { return empty(); }
 
 	std::string getTypeName() const override;
