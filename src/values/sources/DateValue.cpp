@@ -115,7 +115,7 @@ unsigned int DateValue::getMonthNum() const {
 	DateValue_auxillary::subtractYears(_value, &daysRemain, &yearNum);
 	unsigned int monthNum;
 	DateValue_auxillary::subtractMonths(daysRemain, yearNum, nullptr, &monthNum);
-	return monthNum;
+	return monthNum + 1;
 }
 
 unsigned int DateValue::getDayNum() const {
@@ -123,7 +123,7 @@ unsigned int DateValue::getDayNum() const {
 	unsigned long int daysRemain;
 	DateValue_auxillary::subtractYears(_value, &daysRemain, &yearNum);
 	DateValue_auxillary::subtractMonths(daysRemain, yearNum, &daysRemain, nullptr);
-	return daysRemain;
+	return daysRemain + 1;
 }
 
 // setting
@@ -139,11 +139,14 @@ void DateValue::setMonthNum(unsigned int monthNum) {
 	DateValue_auxillary::subtractYears(_value, &daysRemain, &yearNum);
 	unsigned long int notMonthDays;
 	DateValue_auxillary::subtractMonths(daysRemain, yearNum, &notMonthDays, nullptr);
+	if (monthNum == 0)
+		++monthNum;
 	_value += DateValue_auxillary::sumMonth(yearNum, monthNum - 1) - daysRemain + notMonthDays;
 }
 
 void DateValue::setDayNum(unsigned int dayNum) {
-	_value += dayNum - 1 - getDayNum();
+	_value -= getDayNum();
+	_value += dayNum;
 }
 
 void DateValue::set(unsigned int dayNum, unsigned int monthNum, unsigned int yearNum) {
