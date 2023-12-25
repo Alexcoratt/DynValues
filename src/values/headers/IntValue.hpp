@@ -1,34 +1,42 @@
 #ifndef INT_VALUE_HPP
 #define INT_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class IntValue : public IValue {
+class IntValue : public AbstractValue {
 private:
 	int _value;
 
 public:
 	IntValue(int);
-	IntValue(IValue const &);
-	IntValue & operator=(IValue const &);
+	IntValue(IntValue const &);
+	IntValue & operator=(IntValue const &);
 	~IntValue();
 
 	void swap(IntValue &);
 
-	IntValue * getClone() const;
+	// cloning
+	IntValue * getClone() const override;
 
-	bool operator<(IValue const &) const;
+	// comparison
+	bool operator<(AbstractValue const &) const override;
 
-	operator std::string() const;
-	operator double() const;
-	operator int() const;
-	operator unsigned long() const;
+	// transformation
+	std::string toString() const override;
+	char toChar() const override;
+	double toDouble() const override;
+	int toInt() const override;
+	unsigned long toUnsignedLongInt() const override;
 
-	bool isNull() const { return false; }
-	bool isInt() const { return true; }
-	bool isUnsignedLongInt() const { return false; }
-	bool isDouble() const { return false; }
-	bool isString() const { return false; }
+	// typechecking
+	bool isInt() const override { return true; }
+	std::string getTypeName() const override { return "IntValue"; }
+
+	// arithmetic operations
+	IntValue * add(AbstractValue const * other) const override;
+	IntValue * sub(AbstractValue const * other) const override;
+	IntValue * mul(AbstractValue const * other) const override;
+	IntValue * div(AbstractValue const * other) const override;
 };
 
 #endif

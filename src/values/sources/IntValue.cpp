@@ -3,9 +3,9 @@
 #include "IntValue.hpp"
 
 IntValue::IntValue(int value) : _value(value) {}
-IntValue::IntValue(IValue const & other) : _value(other) {}
+IntValue::IntValue(IntValue const & other) : _value(other) {}
 
-IntValue & IntValue::operator=(IValue const & other) {
+IntValue & IntValue::operator=(IntValue const & other) {
 	if (this != &other) {
 		IntValue tmp(other);
 		swap(tmp);
@@ -18,9 +18,17 @@ void IntValue::swap(IntValue & other) { std::swap(_value, other._value); }
 
 IntValue * IntValue::getClone() const { return new IntValue(_value); }
 
-bool IntValue::operator<(IValue const & other) const { return _value < int(other); }
+bool IntValue::operator<(AbstractValue const & other) const { return _value < int(other); }
 
-IntValue::operator std::string() const { return std::to_string(_value); }
-IntValue::operator double() const { return _value; }
-IntValue::operator int() const { return _value; }
-IntValue::operator unsigned long() const { return _value; }
+// transformation
+std::string IntValue::toString() const { return std::to_string(_value); }
+char IntValue::toChar() const { return _value; }
+double IntValue::toDouble() const { return _value; }
+int IntValue::toInt() const { return _value; }
+unsigned long IntValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+IntValue * IntValue::add(AbstractValue const * other) const { return new IntValue(_value + other->toInt()); }
+IntValue * IntValue::sub(AbstractValue const * other) const { return new IntValue(_value - other->toInt()); }
+IntValue * IntValue::mul(AbstractValue const * other) const { return new IntValue(_value * other->toInt()); }
+IntValue * IntValue::div(AbstractValue const * other) const { return new IntValue(_value / other->toInt()); }

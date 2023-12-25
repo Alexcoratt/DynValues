@@ -3,18 +3,30 @@
 UnsignedLongIntValue::UnsignedLongIntValue(unsigned long value) : _value(value) {}
 UnsignedLongIntValue::UnsignedLongIntValue(UnsignedLongIntValue const & other) : _value(other._value) {}
 
-UnsignedLongIntValue & UnsignedLongIntValue::operator=(IValue const & other) {
+UnsignedLongIntValue & UnsignedLongIntValue::operator=(UnsignedLongIntValue const & other) {
 	_value = other;
 	return *this;
 }
 
 UnsignedLongIntValue::~UnsignedLongIntValue() {}
 
+// cloning
 UnsignedLongIntValue * UnsignedLongIntValue::getClone() const { return new UnsignedLongIntValue(_value); }
 
-bool UnsignedLongIntValue::operator<(IValue const & other) const { return _value < (unsigned long)other; }
+// comparison
+bool UnsignedLongIntValue::operator<(AbstractValue const & other) const { return _value < (unsigned long)other; }
 
-UnsignedLongIntValue::operator std::string() const { return std::to_string(_value); }
-UnsignedLongIntValue::operator double() const { return _value; }
-UnsignedLongIntValue::operator int() const { return _value; }
-UnsignedLongIntValue::operator unsigned long() const { return _value; }
+// vector methods are unappliable
+
+// typechecking
+std::string UnsignedLongIntValue::toString() const { return std::to_string(_value); }
+char UnsignedLongIntValue::toChar() const { return _value; }
+double UnsignedLongIntValue::toDouble() const { return _value; }
+int UnsignedLongIntValue::toInt() const { return _value; }
+unsigned long int UnsignedLongIntValue::toUnsignedLongInt() const { return _value; }
+
+// arithmetic operations
+UnsignedLongIntValue * UnsignedLongIntValue::add(AbstractValue const * other) const { return new UnsignedLongIntValue(_value + other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::sub(AbstractValue const * other) const { return new UnsignedLongIntValue(_value - other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::mul(AbstractValue const * other) const { return new UnsignedLongIntValue(_value * other->toUnsignedLongInt()); }
+UnsignedLongIntValue * UnsignedLongIntValue::div(AbstractValue const * other) const { return new UnsignedLongIntValue(_value / other->toUnsignedLongInt()); }

@@ -1,34 +1,28 @@
 #include <iostream>
 #include <string>
 
-#include <IValue.hpp>
+#include <AbstractValue.hpp>
 #include <AutoValue.hpp>
+#include <NullValue.hpp>
+#include <IntValue.hpp>
+#include <VectorValue.hpp>
+#include <DateValue.hpp>
+#include <StringValue.hpp>
+#include <DoubleValue.hpp>
+
+#include <limits.h>
 
 int main() {
 	AutoValue a = 3;
 	AutoValue b = "Hello";
-	AutoValue c;
+	DateValue date(14, 9, 2005);
 
-	std::cout << a << ' ' << b << ' ' << c << std::endl;
+	std::cout << (b + (a + a) + a).getTypeName() << '\t' << (b + (a + a) + a) << std::endl;
 
-	a = "World";
-	std::cout << a << ' ';
+	AutoValue test = ((b + (a + a) + a) * a + StringValue("hi") + date) * (AutoValue(date) / AutoValue(30000));
+	std::cout << test << std::endl;
 
-	b = 2.43;
-	std::cout << b << ' ';
-
-	c = -21.32;
-	std::cout << c << ' ';
-
-	auto aClone = a.getClone();
-
-	std::cout << std::endl << a.nestCount() << ' ' << *aClone << std::endl;
-
-	IValue * n = aClone;
-	aClone->clear();
-	std::cout << n->isNull() << std::endl;
-
-	delete n;
+	std::cout << AutoValue(date) + AutoValue(1) << std::endl;
 
 	return 0;
 }

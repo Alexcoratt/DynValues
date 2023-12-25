@@ -1,34 +1,42 @@
 #ifndef UNSIGNED_LONG_INT_VALUE_HPP
 #define UNSIGNED_LONG_INT_VALUE_HPP
 
-#include "IValue.hpp"
+#include "AbstractValue.hpp"
 
-class UnsignedLongIntValue : public IValue {
+class UnsignedLongIntValue : public AbstractValue {
 private:
 	unsigned long _value;
 
 public:
 	UnsignedLongIntValue(unsigned long);
 	UnsignedLongIntValue(UnsignedLongIntValue const &);
-	UnsignedLongIntValue & operator=(IValue const &);
+	UnsignedLongIntValue & operator=(UnsignedLongIntValue const &);
 	~UnsignedLongIntValue();
 
 	void swap(UnsignedLongIntValue &);
 
-	UnsignedLongIntValue * getClone() const;
+	// cloning
+	UnsignedLongIntValue * getClone() const override;
 
-	bool operator<(IValue const &) const;
+	// comparison
+	bool operator<(AbstractValue const &) const override;
 
-	operator std::string() const;
-	operator double() const;
-	operator int() const;
-	operator unsigned long() const;
+	// transformation
+	std::string toString() const override;
+	char toChar() const override;
+	double toDouble() const override;
+	int toInt() const override;
+	unsigned long toUnsignedLongInt() const override;
 
-	bool isNull() const { return false; }
-	bool isInt() const { return false; }
-	bool isUnsignedLongInt() const { return true; }
-	bool isDouble() const { return false; }
-	bool isString() const { return false; }
+	// typechecking
+	bool isUnsignedLongInt() const override { return true; }
+	std::string getTypeName() const override { return "UnsignedLongIntValue"; }
+
+	// arithmetic operations
+	UnsignedLongIntValue * add(AbstractValue const * other) const override;
+	UnsignedLongIntValue * sub(AbstractValue const * other) const override;
+	UnsignedLongIntValue * mul(AbstractValue const * other) const override;
+	UnsignedLongIntValue * div(AbstractValue const * other) const override;
 };
 
 #endif
