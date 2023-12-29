@@ -12,20 +12,16 @@
 
 AutoValue::AutoValue() : _value(new NullValue) {}
 AutoValue::AutoValue(AutoValue const & other) : _value(other._value->getClone()) {}
-AutoValue::AutoValue(AbstractValue const & value) {
-	auto autoValue = dynamic_cast<AutoValue const *>(&value);
-	if (autoValue)
-		_value.reset(autoValue->_value->getClone());
-	else
-		_value.reset(value.getClone());
-}
+AutoValue::AutoValue(AbstractValue const & value) : AutoValue(&value) {}
+
 AutoValue::AutoValue(AbstractValue const * value) {
 	auto autoValue = dynamic_cast<AutoValue const *>(value);
 	if (autoValue)
-		_value.reset(autoValue->_value->getClone());
+		_value = autoValue->_value->getClone();
 	else
-		_value.reset(value->getClone());
+		_value = value->getClone();
 }
+
 AutoValue::AutoValue(double value) : _value(new DoubleValue(value)) {}
 AutoValue::AutoValue(int value) : _value(new IntValue(value)) {}
 AutoValue::AutoValue(unsigned long value) : _value(new UnsignedLongIntValue(value)) {}
@@ -42,16 +38,19 @@ AutoValue & AutoValue::operator=(AutoValue const & other) {
 	return *this;
 }
 
-AutoValue::~AutoValue() {}
+AutoValue::~AutoValue() {
+	delete _value;
+}
 
-void AutoValue::clear() { _value.reset(new NullValue()); }
+void AutoValue::clear() {
+	delete _value;
+	_value = new NullValue;
+}
 
 void AutoValue::swap(AutoValue & other) { std::swap(_value, other._value); }
 
 // clonning
-AutoValue * AutoValue::getClone() const {
-	return new AutoValue(_value.get());
-}
+AutoValue * AutoValue::getClone() const { return new AutoValue(_value); }
 
 // comparison
 bool AutoValue::operator<(AbstractValue const & other) const { return *_value < other; }
@@ -98,11 +97,10 @@ void AutoValue::push_back(AbstractValue const & value) {
 		_value->push_back(value);
 		return;
 	}
-	if (isNull()) {
-		_value.reset(value.getClone());
-		return;
-	}
-	_value.reset(new VectorValue{{_value.get(), &value}});
+
+	auto old = _value;
+	_value = isNull() ? value.getClone() : new VectorValue{{_value, &value}};
+	delete old;
 }
 
 void AutoValue::pop_back() {
@@ -110,7 +108,8 @@ void AutoValue::pop_back() {
 		_value->pop_back();
 		return;
 	}
-	_value.reset(new VectorValue{});
+	delete _value;
+	_value = new VectorValue{};
 }
 
 std::size_t AutoValue::size() const {
@@ -152,49 +151,57 @@ std::string AutoValue::getTypeName() const { return "AutoValue: " + _value->getT
 // arithmetic operations
 AutoValue * AutoValue::add(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
-	res->_value.reset(_value->add(other));
+	delete res->_value;
+	res->_value = _value->add(other);
 	return res;
 }
 
 AutoValue * AutoValue::sub(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
-	res->_value.reset(_value->sub(other));
+	delete res->_value;
+	res->_value = _value->sub(other);
 	return res;
 }
 
 AutoValue * AutoValue::mul(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
-	res->_value.reset(_value->mul(other));
+	delete res->_value;
+	res->_value = _value->mul(other);
 	return res;
 }
 
 AutoValue * AutoValue::div(AbstractValue const * other) const {
 	AutoValue * res = new AutoValue;
-	res->_value.reset(_value->div(other));
+	delete res->_value;
+	res->_value = _value->div(other);
 	return res;
 }
 
 // arithmetic operators
 AutoValue AutoValue::operator+(AbstractValue const & other) const {
-	AutoValue res;
-	res._value.reset(_value->add(&other));
-	return res;
+	AutoValue * res = add(&other);
+	AutoValue ret(res);
+	delete res;
+	return ret;
 }
 
 AutoValue AutoValue::operator-(AbstractValue const & other) const {
-	AutoValue res;
-	res._value.reset(_value->sub(&other));
-	return res;
+	AutoValue * res = sub(&other);
+	AutoValue ret(res);
+	delete res;
+	return ret;
 }
 
 AutoValue AutoValue::operator*(AbstractValue const & other) const {
-	AutoValue res;
-	res._value.reset(_value->mul(&other));
-	return res;
+	AutoValue * res = mul(&other);
+	AutoValue ret(res);
+	delete res;
+	return ret;
 }
 
 AutoValue AutoValue::operator/(AbstractValue const & other) const {
-	AutoValue res;
-	res._value.reset(_value->div(&other));
-	return res;
+	AutoValue * res = div(&other);
+	AutoValue ret(res);
+	delete res;
+	return ret;
 }

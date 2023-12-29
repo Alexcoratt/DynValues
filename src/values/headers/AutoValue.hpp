@@ -1,14 +1,12 @@
 #ifndef AUTO_VALUE_HPP
 #define AUTO_VALUE_HPP
 
-#include <memory>
 #include <vector>
-
 #include "AbstractValue.hpp"
 
 class AutoValue : public AbstractValue {
 private:
-	std::shared_ptr<AbstractValue> _value;
+	AbstractValue * _value;
 
 public:
 	AutoValue();
